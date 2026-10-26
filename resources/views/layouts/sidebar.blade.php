@@ -12,7 +12,14 @@ $usrhandl = Auth::user()->littlelink_name;
       <title>{{env('APP_NAME')}}</title>
 
       <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
-      
+
+      <!-- keep the old page on screen and cross-fade to the new one (Chrome/Edge 126+, Safari 18.2+; others just navigate) -->
+      <style>
+        @media (prefers-reduced-motion: no-preference) {
+          @view-transition { navigation: auto; }
+        }
+      </style>
+
       <base href="{{url()->current()}}" />
 
 	  @include('layouts.analytics')
@@ -68,12 +75,12 @@ $usrhandl = Auth::user()->littlelink_name;
 
   </head>
   <body class="  ">
-    <!-- loader Start -->
-    <div id="loading">
-      <div class="loader simple-loader">
-          <div class="loader-body"></div>
-      </div>    </div>
-    <!-- loader END -->
+    <!-- apply saved color mode before first paint; setting.js does it only at the end of the page, causing a white flash -->
+    <script>
+      var bodyColorMode = localStorage.getItem('color-mode');
+      document.body.classList.add(bodyColorMode);
+      if (bodyColorMode === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches) document.body.classList.add('dark');
+    </script>
     
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
         <div class="sidebar-header d-flex align-items-center justify-content-start">
@@ -336,93 +343,6 @@ $usrhandl = Auth::user()->littlelink_name;
                   </div>
                 </li>
 
-                {{-- <! –– #### begin update detection #### ––> --}}
-                @if(env('NOTIFY_UPDATES') == 'true' or env('NOTIFY_UPDATES') === 'major' or env('NOTIFY_UPDATES') === 'all')
-              
-                              {{-- <! –– Checks if file version.json exists AND if version.json exists on server to continue (without this PHP will throw ErrorException ) ––> --}}
-                              @if(file_exists(base_path("version.json")))
-              
-                                <?php // Requests newest version from server and sets it as variable
-              
-                                try{
-                                $Vgit = external_file_get_contents("https://version.linkstack.org/"); 
-              
-                             // Requests current version from the local version file and sets it as variable
-                                $Vlocal = file_get_contents(base_path("version.json"));
-                                }
-              
-                                catch (Exception $e){
-                                $Vgit = "0"; 
-                                $Vlocal = "0"; 
-                        }
-                        ?>
-              
-                        @if(auth()->user()->role == 'admin')
-                        <li class="nav-item dropdown">
-                          <a href="#" class="nav-link" id="mail-drop" data-bs-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
-                            <svg class="icon-24" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 7.92V16.09C22 19.62 19.729 22 16.34 22H7.67C4.28 22 2 19.62 2 16.09V7.92C2 4.38 4.28 2 7.67 2H16.34C19.729 2 22 4.38 22 7.92ZM11.25 9.73V16.08C11.25 16.5 11.59 16.83 12 16.83C12.42 16.83 12.75 16.5 12.75 16.08V9.73L15.22 12.21C15.36 12.35 15.56 12.43 15.75 12.43C15.939 12.43 16.13 12.35 16.28 12.21C16.57 11.92 16.57 11.44 16.28 11.15L12.53 7.38C12.25 7.1 11.75 7.1 11.47 7.38L7.72 11.15C7.43 11.44 7.43 11.92 7.72 12.21C8.02 12.5 8.49 12.5 8.79 12.21L11.25 9.73Z" fill="currentColor"></path>
-                                @if($Vgit > $Vlocal or env('JOIN_BETA'))<circle cx="18" cy="17" r="5" @if($Vgit > $Vlocal) fill="tomato" @elseif(env('JOIN_BETA')) fill="orange" @endif stroke="white" stroke-width="2"/>@endif
-                            </svg>
-                            <span class="bg-primary count-mail"></span>
-                          </a>
-                          <div class="p-0 sub-drop dropdown-menu dropdown-menu-end" aria-labelledby="mail-drop">
-                              <div class="m-0 shadow-none card">
-                                @if(env('JOIN_BETA') == true)
-                                <div class="py-3 card-header d-flex justify-content-between bg-primary">
-                                    <div class="header-title">
-                                      <h5 class="mb-0 text-white">{{__('messages.Updater')}} <span style="background-color:orange;" class="badge">{{__('messages.Beta Mode')}}</span></h5>
-                                    </div>
-                                </div>
-                                <div class="p-0 card-body rounded-bottom">
-                                  <a href="{{ url('update') }}" class="iq-sub-card">
-                                    <div class="d-flex align-items-center">
-                                      <table class="m-0 table table-bordered table-sm">
-                                        <thead>
-                                          <tr>
-                                            <th>{{__('messages.Local version')}}</th>
-                                            <th>{{__('messages.Latest beta')}}</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <td><center><span class="badge rounded-pill bg-primary"><?php  if(file_exists(base_path("vbeta.json"))) {echo file_get_contents(base_path("vbeta.json"));} else {echo "none";}  ?></span></center></td>
-                                            <td><center><span class="badge rounded-pill bg-primary"><?php echo external_file_get_contents("https://beta.linkstack.org/vbeta.json"); ?></span></center></td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                    <center><button class="btn btn-primary rounded-pill mt-2">{{__('messages.Run updater')}}</button></center>
-                                  </a>
-                                </div>
-                                @else
-                                <div class="py-3 card-header d-flex justify-content-between bg-primary">
-                                  <div class="header-title">
-                                    <h5 class="mb-0 text-white">{{__('messages.Updater')}}</h5>
-                                  </div>
-                              </div>
-                              <div class="p-0 card-body rounded-bottom">
-                                <a @if($Vgit > $Vlocal) href="{{ url('update') }}" @else href="{{url()->current()}}" @endif class="iq-sub-card">
-                                  <div class="d-flex align-items-center">
-                                    <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">                                <path d="M12.0122 14.8299C10.4077 14.8299 9.10986 13.5799 9.10986 12.0099C9.10986 10.4399 10.4077 9.17993 12.0122 9.17993C13.6167 9.17993 14.8839 10.4399 14.8839 12.0099C14.8839 13.5799 13.6167 14.8299 12.0122 14.8299Z" fill="currentColor"></path>                                <path opacity="0.4" d="M21.2301 14.37C21.036 14.07 20.76 13.77 20.4023 13.58C20.1162 13.44 19.9322 13.21 19.7687 12.94C19.2475 12.08 19.5541 10.95 20.4228 10.44C21.4447 9.87 21.7718 8.6 21.179 7.61L20.4943 6.43C19.9118 5.44 18.6344 5.09 17.6226 5.67C16.7233 6.15 15.5685 5.83 15.0473 4.98C14.8838 4.7 14.7918 4.4 14.8122 4.1C14.8429 3.71 14.7203 3.34 14.5363 3.04C14.1582 2.42 13.4735 2 12.7172 2H11.2763C10.5302 2.02 9.84553 2.42 9.4674 3.04C9.27323 3.34 9.16081 3.71 9.18125 4.1C9.20169 4.4 9.10972 4.7 8.9462 4.98C8.425 5.83 7.27019 6.15 6.38109 5.67C5.35913 5.09 4.09191 5.44 3.49917 6.43L2.81446 7.61C2.23194 8.6 2.55897 9.87 3.57071 10.44C4.43937 10.95 4.74596 12.08 4.23498 12.94C4.06125 13.21 3.87729 13.44 3.59115 13.58C3.24368 13.77 2.93709 14.07 2.77358 14.37C2.39546 14.99 2.4159 15.77 2.79402 16.42L3.49917 17.62C3.87729 18.26 4.58245 18.66 5.31825 18.66C5.66572 18.66 6.0745 18.56 6.40153 18.36C6.65702 18.19 6.96361 18.13 7.30085 18.13C8.31259 18.13 9.16081 18.96 9.18125 19.95C9.18125 21.1 10.1215 22 11.3069 22H12.6968C13.872 22 14.8122 21.1 14.8122 19.95C14.8429 18.96 15.6911 18.13 16.7029 18.13C17.0299 18.13 17.3365 18.19 17.6022 18.36C17.9292 18.56 18.3278 18.66 18.6855 18.66C19.411 18.66 20.1162 18.26 20.4943 17.62L21.2097 16.42C21.5776 15.75 21.6083 14.99 21.2301 14.37Z" fill="currentColor"></path>                                </svg>                            
-                                      <div class="ms-3 w-100">
-                                        <h6 class="mb-0 ">@if($Vgit > $Vlocal) {{__('messages.Update available')}} @else {{__('messages.Up to date')}} @endif</h6>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <p class="mb-0"><i>@if($Vgit > $Vlocal) {{__('messages.Run updater')}} @else {{__('messages.Check again')}} @endif</i></p>
-                                            <small class="float-end font-size-12">v{{$Vlocal}}</small>
-                                        </div>
-                                      </div>
-                                  </div>
-                                </a>
-                              </div>
-                                @endif
-                              </div>
-                          </div>
-                        </li>
-                        @endif
-                      @endif
-                @endif
-                {{-- <! –– #### end update detection #### ––> --}}
 
                 <li class="nav-item dropdown">
                   <a class="py-0 nav-link d-flex align-items-center dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#navbarDropdownIcon">
@@ -517,14 +437,6 @@ $usrhandl = Auth::user()->littlelink_name;
               </ul>
               <div class="right-panel">
                 {{__('messages.Copyright')}} &copy; @php echo date('Y'); @endphp {{ config('app.name') }}
-                @if(env('DISPLAY_CREDIT_FOOTER') === true)
-                  <span class="">
-                    - {{__('messages.Made with')}} 
-                      <svg class="icon-15" width="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z" fill="currentColor"></path>
-                      </svg>
-                  </span> {{__('messages.by')}} <a href="https://linkstack.org/" target="_blank">LinkStack</a>.
-                @endif
               </div>
           </div>
       </footer>
@@ -722,7 +634,8 @@ $usrhandl = Auth::user()->littlelink_name;
         document.addEventListener("DOMContentLoaded", function() {
             var downloadButton = document.getElementById("downloadButton");
             var generatedImage = document.getElementById("generatedImage");
-        
+            if (!downloadButton) return;
+
             downloadButton.addEventListener("click", function() {
                 var format = generatedImage.getAttribute("data-format") || "png";
                 var downloadLink = document.createElement("a");

@@ -20,7 +20,7 @@ return [
     'by' => '由',
 
     'HOME.MESSAGE' => '
-    <p>通过<strong><a href="https://linkstack.org/"><strong>LinkStack</a></strong></a>
+    <p>通过<strong><strong>LinkUp</strong></strong></a>
     这是一个注重隐私的开源<strong>链接管理平台</strong>。创建一个可自定义的个人资料页面，以便管理<strong>所有重要的链接</strong>，
     并为您的受众提供丝滑的浏览体验。</p>
     ',
@@ -751,10 +751,10 @@ return [
     */
 
     # 标题标签
-    'LinkStack setup' => 'LinkStack 设置',
+    'LinkStack setup' => 'LinkUp 设置',
 
-    'Setup LinkStack' => '设置 LinkStack',
-    'Welcome to the setup for LinkStack!' => '欢迎使用 LinkStack 设置！',
+    'Setup LinkStack' => '设置 LinkUp',
+    'Welcome to the setup for LinkStack!' => '欢迎使用 LinkUp 设置！',
     'This setup will:' => '本设置将：',
     'Check the server dependencies' => '1. 检查服务器依赖项',
     'Setup the database' => '2. 设置数据库',
@@ -812,7 +812,7 @@ return [
     */
 
     # 标题标签
-    'Update LinkStack' => '更新 LinkStack',
+    'Update LinkStack' => '更新 LinkUp',
 
     'Latest beta version' => '最新测试版',
     'Installed beta version' => '已安装测试版',
@@ -975,7 +975,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) 页面
+    | LinkUp (Links) 页面
     |--------------------------------------------------------------------------
     |
     | resources/views/linkstack/linkstack.blade.php
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => '了解更多关于 LinkStack',
+    'Learn more about LinkStack' => '了解更多关于 LinkUp',
     'Learn more' => '了解更多',
 
     /*
@@ -1031,14 +1031,14 @@ return [
     # 帮助我们通知
     'Hide this notification' => '隐藏此通知',
     'Help Us Out' => '帮助我们',
-    'Enjoying Linkstack?' => '喜欢使用 Linkstack 吗？',
-    'Support Linkstack' => '支持 Linkstack',
-    'support.msg1' => '如果您喜欢使用 Linkstack，我们将非常感激您如果您能花一点时间',
+    'Enjoying Linkstack?' => '喜欢使用 LinkUp 吗？',
+    'Support Linkstack' => '支持 LinkUp',
+    'support.msg1' => '如果您喜欢使用 LinkUp，我们将非常感激您如果您能花一点时间',
     'support.msg2' => '在 GitHub 上给我们的项目一个星',
     'support.msg3' => '您的支持将帮助我们吸引更广泛的受众，提高我们项目的质量。',
     'support.msg4' => '如果您能',
-    'support.msg5' => '提供财政支持</a>，哪怕是一点点，也将有助于我们支付维护和改进 Linkstack 的成本。',
-    'support.msg6' => '感谢您的支持，以及您是 LinkStack 社区的一部分！',
+    'support.msg5' => '提供财政支持</a>，哪怕是一点点，也将有助于我们支付维护和改进 LinkUp 的成本。',
+    'support.msg6' => '感谢您的支持，以及您是 LinkUp 社区的一部分！',
 
 
     /*

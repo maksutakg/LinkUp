@@ -20,7 +20,7 @@ return [
     'by' => 'av',
 
     'HOME.MESSAGE' => '
-    <p>Få grepp om din onlineprofil med&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>,
+    <p>Få grepp om din onlineprofil med&nbsp;<strong>LinkUp</strong>,
      en <strong>länkplattform</strong> med integritet och öppen källkod. Skapa en anpassningsbar profil för att hantera <strong>
      dina viktigaste länkar på ett och samma ställe</strong> och ge din omgivning en sömlös surfupplevelse.</p>
      ',
@@ -748,10 +748,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'Installation av LinkStack',
+    'LinkStack setup' => 'Installation av LinkUp',
 
-    'Setup LinkStack' => 'Installera LinkStack',
-    'Welcome to the setup for LinkStack!' => 'Välkommen till installationsguiden för LinkStack!',
+    'Setup LinkStack' => 'Installera LinkUp',
+    'Welcome to the setup for LinkStack!' => 'Välkommen till installationsguiden för LinkUp!',
     'This setup will:' => 'Den här installationsguiden kommer att:',
     'Check the server dependencies' => '1. Kontrollera serverkrav',
     'Setup the database' => '2. Installera databasen',
@@ -807,7 +807,7 @@ return [
     */
 
     # Titel-tagg
-    'Update LinkStack' => 'Uppdatera LinkStack',
+    'Update LinkStack' => 'Uppdatera LinkUp',
 
     'Latest beta version' => 'Senaste betaversion',
     'Installed beta version' => 'Installerad betaversion',
@@ -970,7 +970,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Länk-sida)
+    | LinkUp (Länk-sida)
     |--------------------------------------------------------------------------
     |
     | resources/views/littlelink.blade.php
@@ -1001,7 +1001,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Lär dig mer om LinkStack',
+    'Learn more about LinkStack' => 'Lär dig mer om LinkUp',
     'Learn more' => 'Lär dig mer',
 
     /*
@@ -1027,13 +1027,13 @@ return [
     # "Hjälp oss"-notis
     'Hide this notification' => 'Dölj den här notisen',
     'Help Us Out' => 'Hjälp Oss',
-    'Enjoying Linkstack?' => 'Gillar du LinkStack?',
-    'Support Linkstack' => 'Stöd LinkStack',
-    'support.msg1' => 'Om du har fått nöje av att använda LinkStack, så skulle vi verkligen uppskatta om du kunde',
+    'Enjoying Linkstack?' => 'Gillar du LinkUp?',
+    'Support Linkstack' => 'Stöd LinkUp',
+    'support.msg1' => 'Om du har fått nöje av att använda LinkUp, så skulle vi verkligen uppskatta om du kunde',
     'support.msg2' => 'stjärnmarkera projektet på GitHub',
     'support.msg3' => 'Ditt stöd hjälper oss nå en bredare publik och förbättrar kvalitén på vårt projekt.',
     'support.msg4' => 'Om du har möjlighet att',
-    'support.msg5' => 'stödja oss finansiellt</a>, så skulle även en liten summa hjälpa oss att täcka kostnaderna för underhåll och förbättring av LinkStack.',
+    'support.msg5' => 'stödja oss finansiellt</a>, så skulle även en liten summa hjälpa oss att täcka kostnaderna för underhåll och förbättring av LinkUp.',
     'support.msg6' => 'Tack för ditt stöd och för att du är en del av LinkStacks gemenskap!',
 
 

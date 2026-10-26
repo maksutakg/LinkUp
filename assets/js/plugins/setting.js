@@ -190,6 +190,7 @@ Index Of Script
             localStorage.setItem('color-mode', mode.getAttribute('data-value'))
             mode.classList.add('active')
             document.querySelector('body').classList.add(mode.getAttribute('data-value'))
+            document.documentElement.style.colorScheme = mode.getAttribute('data-value') === 'auto' ? 'light dark' : mode.getAttribute('data-value')
             changeMode('color-mode', mode.getAttribute('data-value'))
         })
     })

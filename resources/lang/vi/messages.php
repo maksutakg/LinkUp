@@ -20,7 +20,7 @@ return [
     'by' => 'bởi',
 
     'HOME.MESSAGE' => '
-    <p>Kiếm soát sự hiện diện của bạn với&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>
+    <p>Kiếm soát sự hiện diện của bạn với&nbsp;<strong>LinkUp</strong>
      Nền tảng <strong>quản lý liên kết</strong> miễn phí và tôn trọng quyền riêng tự của bạn. Tạo một trang cá nhân để quản lý <strong>
      tất cả những liên kết quan trọng</strong> và giúp người dùng dễ dàng tìm kiếm bạn.</p>
      ',
@@ -745,10 +745,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'LinkStack Setup',
+    'LinkStack setup' => 'LinkUp Setup',
 
     'Setup LinkStack' => 'setupLinkStack',
-    'Welcome to the setup for LinkStack!' => 'Chào mừng bạn đến với thiết lập cho LinkStack!',
+    'Welcome to the setup for LinkStack!' => 'Chào mừng bạn đến với thiết lập cho LinkUp!',
     'This setup will:' => 'Thiết lập này sẽ:',
     'Check the server dependencies' => '1.Kiểm tra các phụ thuộc của máy chủ ',
     'Setup the database' => '2.Thiết lập cơ sở dữ liệu ',
@@ -804,7 +804,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'Cập nhật linkStack',
+    'Update LinkStack' => 'Cập nhật LinkUp',
 
     'Latest beta version' => 'Phiên bản beta mới nhất',
     'Installed beta version' => 'Đã cài đặt phiên bản beta',
@@ -967,7 +967,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page
+    | LinkUp (Links) Page
     |--------------------------------------------------------------------------
     |
     | resources/views/littlelink.blade.php
@@ -990,7 +990,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Tìm hiểu thêm về LinkStack',
+    'Learn more about LinkStack' => 'Tìm hiểu thêm về LinkUp',
     'Learn more' => 'Tìm hiểu thêm',
 
     /*
@@ -1016,14 +1016,14 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'Ẩn thông báo này',
     'Help Us Out' => 'Giúp chúng tôi ra',
-    'Enjoying Linkstack?' => 'Thưởng thức LinkStack?',
-    'Support Linkstack' => 'LinkStack hỗ trợ',
-    'support.msg1' => 'Nếu bạn \'re enjoying using Linkstack, we would greatly appreciate it if you could take a moment to',
+    'Enjoying Linkstack?' => 'Thưởng thức LinkUp?',
+    'Support Linkstack' => 'LinkUp hỗ trợ',
+    'support.msg1' => 'Nếu bạn \'re enjoying using LinkUp, we would greatly appreciate it if you could take a moment to',
     'support.msg2' => 'Cung cấp cho dự án của chúng tôi một ngôi sao trên GitHub',
     'support.msg3' => 'Hỗ trợ của bạn sẽ giúp chúng tôi tiếp cận đối tượng rộng hơn và cải thiện chất lượng dự án của chúng tôi.',
     'support.msg4' => 'Nếu bạn \'re able to',
-    'support.msg5' => 'Đóng góp tài chính </a>, thậm chí một số tiền nhỏ sẽ giúp chúng tôi trang trải chi phí duy trì và cải thiện Linkstack.',
-    'support.msg6' => 'Cảm ơn bạn đã hỗ trợ và là một phần của cộng đồng Linkstack!',
+    'support.msg5' => 'Đóng góp tài chính </a>, thậm chí một số tiền nhỏ sẽ giúp chúng tôi trang trải chi phí duy trì và cải thiện LinkUp.',
+    'support.msg6' => 'Cảm ơn bạn đã hỗ trợ và là một phần của cộng đồng LinkUp!',
 
 
     /*

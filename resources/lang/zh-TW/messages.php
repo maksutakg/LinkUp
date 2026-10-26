@@ -20,7 +20,7 @@ return [
     'by' => '由',
 
     'HOME.MESSAGE' => '
-    <p>使用<strong><a href="https://linkstack.org/">LinkStack</strong></a>，這款以隱私為重點的開源<strong>鏈接管理平台</strong>，來掌控您的在線形象。建立一個可自訂的個人資料頁面，將您<strong>所有重要的連結集中管理在一個方便的地方</strong>，讓您的觀眾享有無縫的瀏覽體驗。</p>
+    <p>使用<strong><strong>LinkUp</strong>，這款以隱私為重點的開源<strong>鏈接管理平台</strong>，來掌控您的在線形象。建立一個可自訂的個人資料頁面，將您<strong>所有重要的連結集中管理在一個方便的地方</strong>，讓您的觀眾享有無縫的瀏覽體驗。</p>
     ',
 
 
@@ -749,10 +749,10 @@ return [
     */
 
     # 標題標籤
-    'LinkStack setup' => 'LinkStack 設置',
+    'LinkStack setup' => 'LinkUp 設置',
 
-    'Setup LinkStack' => '設置 LinkStack',
-    'Welcome to the setup for LinkStack!' => '歡迎使用 LinkStack 設置！',
+    'Setup LinkStack' => '設置 LinkUp',
+    'Welcome to the setup for LinkStack!' => '歡迎使用 LinkUp 設置！',
     'This setup will:' => '本設置將：',
     'Check the server dependencies' => '1. 檢查伺服器相依性',
     'Setup the database' => '2. 設置資料庫',
@@ -810,7 +810,7 @@ return [
     */
 
     # 標題標籤
-    'Update LinkStack' => '更新 LinkStack',
+    'Update LinkStack' => '更新 LinkUp',
 
     'Latest beta version' => '最新測試版',
     'Installed beta version' => '已安裝測試版',
@@ -973,7 +973,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) 頁面
+    | LinkUp (Links) 頁面
     |--------------------------------------------------------------------------
     |
     | resources/views/linkstack/linkstack.blade.php
@@ -1003,7 +1003,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => '了解更多關於 LinkStack',
+    'Learn more about LinkStack' => '了解更多關於 LinkUp',
     'Learn more' => '了解更多',
 
     /*
@@ -1029,14 +1029,14 @@ return [
     # 帮助我們通知
     'Hide this notification' => '隱藏此通知',
     'Help Us Out' => '幫助我們',
-    'Enjoying Linkstack?' => '喜歡使用 Linkstack 嗎？',
-    'Support Linkstack' => '支持 Linkstack',
-    'support.msg1' => '如果您喜歡使用 Linkstack，我們將非常感激您如果您能花一點時間',
+    'Enjoying Linkstack?' => '喜歡使用 LinkUp 嗎？',
+    'Support Linkstack' => '支持 LinkUp',
+    'support.msg1' => '如果您喜歡使用 LinkUp，我們將非常感激您如果您能花一點時間',
     'support.msg2' => '在 GitHub 上給我們的專案一個星',
     'support.msg3' => '您的支持將幫助我們吸引更廣泛的受眾，提高我們專案的品質。',
     'support.msg4' => '如果您能',
-    'support.msg5' => '提供財政支持</a>，哪怕是一點點，也將有助於我們支付維護和改進 Linkstack 的成本。',
-    'support.msg6' => '感謝您的支持，以及您是 LinkStack 社群的一部分！',
+    'support.msg5' => '提供財政支持</a>，哪怕是一點點，也將有助於我們支付維護和改進 LinkUp 的成本。',
+    'support.msg6' => '感謝您的支持，以及您是 LinkUp 社群的一部分！',
 
 
     /*

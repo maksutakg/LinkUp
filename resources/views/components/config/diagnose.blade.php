@@ -28,8 +28,10 @@ $wrt1 = is_writable(base_path('.env'));
 $wrt2 = is_writable(base_path('database/database.sqlite'));
 
 //Files or directories to test if accessible externally
-$url1 = getUrlSatusCode(url('.env'));
-$url2 = getUrlSatusCode(url('database/database.sqlite'));
+// skipped on `php artisan serve` (shown as unknown): the single-threaded server can't answer its own request, so each curl waits for the 3s timeout
+$selfRequestable = php_sapi_name() !== 'cli-server';
+$url1 = $selfRequestable ? getUrlSatusCode(url('.env')) : 0;
+$url2 = $selfRequestable ? getUrlSatusCode(url('database/database.sqlite')) : 0;
 
 ?>
 

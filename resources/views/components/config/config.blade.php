@@ -279,7 +279,6 @@ foreach($users as $user){if($user->littlelink_name != $configValue2){echo '<opti
 {{toggle('NOTIFY_EVENTS')}}
 
 
-{{toggle('NOTIFY_UPDATES')}}
 
 
 {{toggle('ENABLE_BUTTON_EDITOR')}}
@@ -315,7 +314,6 @@ foreach($users as $user){if($user->littlelink_name != $configValue2){echo '<opti
 
 <a name="Advanced"><h2 class="ch2">{{__('messages.Advanced')}}</h2></a>
 
-{{toggle('JOIN_BETA')}}
 
 {{-- start MAINTENANCE_MODE --}}
 <form id="MAINTENANCE_MODE-form" action="{{route('editConfig')}}" enctype="multipart/form-data" method="post">
@@ -401,10 +399,6 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 <a name="Footer"><h2 class="ch2">{{__('messages.Footer links')}}</h2></a>
 
 {{toggle('DISPLAY_FOOTER')}}
-
-{{toggle('DISPLAY_CREDIT')}}
-
-{{toggle('DISPLAY_CREDIT_FOOTER')}}
 
 {{toggle('DISPLAY_FOOTER_HOME')}}
 {{text('TITLE_FOOTER_HOME')}}
