@@ -18,4 +18,7 @@ if ($uri !== '/' && file_exists(__DIR__.$uri)) {
     return false;
 }
 
+// Apache always sets QUERY_STRING; the built-in server omits it when empty, and views read it directly.
+$_SERVER['QUERY_STRING'] ??= '';
+
 require_once __DIR__.'/index.php';

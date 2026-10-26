@@ -142,7 +142,7 @@ if (EnvEditor::keyExists('ADMIN_EMAIL')) {
 }
 
 if (env('APP_NAME') == 'LittleLink Custom' or env('APP_NAME') == 'LittleLink') {
-    EnvEditor::editKey('APP_NAME', 'LinkStack');
+    EnvEditor::editKey('APP_NAME', 'LinkUp');
 }
 
 if (EnvEditor::keyExists('ALLOW_REGISTRATION')) {

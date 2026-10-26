@@ -26,7 +26,7 @@ return array (
   'by' => 'par',
 
   'HOME.MESSAGE' => '
-  <p>Contrôlez votre présence en ligne avec&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>,
+  <p>Contrôlez votre présence en ligne avec&nbsp;<strong>LinkUp</strong>,
    la plateforme de gestion de liens <strong>open-source</strong> axée sur la confidentialité. Créez une page de profil personnalisable pour gérer <strong>
    tous vos liens importants au même endroit</strong> et offrez à votre public une expérience de navigation transparente.</p>
   ',
@@ -611,7 +611,7 @@ return array (
   'The server will never store more that two backups at a time' => 'Le serveur ne stockera jamais plus de deux sauvegardes à la fois.',
     
   'SMTP.title' => 'Utiliser le serveur SMTP intégré',
-  'SMTP.description' => 'Utilise le serveur SMTP fourni par LinkStack. Peut-être pas fiable à 100 %. Doit être désactivé pour pouvoir utiliser un serveur SMTP personnalisé.',
+  'SMTP.description' => 'Utilise le serveur SMTP fourni par LinkUp. Peut-être pas fiable à 100 %. Doit être désactivé pour pouvoir utiliser un serveur SMTP personnalisé.',
   'SMTP.description.alt' => '(Enregistrer les modifications avec "Appliquer les modifications" ci-dessous)',
   'Enable' => 'Activer',
   'Custom SMTP server:' => 'Serveur SMTP personnalisé :',
@@ -741,10 +741,10 @@ return array (
     */
 
     # Title Tag
-  'LinkStack setup' => 'Configuration de LinkStack',
+  'LinkStack setup' => 'Configuration de LinkUp',
     
-  'Setup LinkStack' => 'Installation de LinkStack',
-  'Welcome to the setup for LinkStack!' => 'Bienvenue dans la configuration de LinkStack !',
+  'Setup LinkStack' => 'Installation de LinkUp',
+  'Welcome to the setup for LinkStack!' => 'Bienvenue dans la configuration de LinkUp !',
   'This setup will:' => 'Cette installation va :',
   'Check the server dependencies' => '1. Vérifier les dépendances du serveur',
   'Setup the database' => '2. Configurer la base de données',
@@ -800,7 +800,7 @@ return array (
     */
 
     # Title Tag
-  'Update LinkStack' => 'Mettre à jour LinkStack',
+  'Update LinkStack' => 'Mettre à jour LinkUp',
     
   'Latest beta version' => 'Dernière version bêta',
   'Installed beta version' => 'Version bêta installée',
@@ -963,7 +963,7 @@ return array (
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page
+    | LinkUp (Links) Page
     |--------------------------------------------------------------------------
     |
     | resources/views/littlelink.blade.php
@@ -990,7 +990,7 @@ return array (
     |
     */
     
-  'Learn more about LinkStack' => 'En savoir plus sur LinkStack',
+  'Learn more about LinkStack' => 'En savoir plus sur LinkUp',
   'Learn more' => 'Plus d\'info',
 
     /*
@@ -1016,14 +1016,14 @@ return array (
     # Help Us Out Notification
   'Hide this notification' => 'Masquer cette notification',
   'Help Us Out' => 'Aidez-nous',
-  'Enjoying Linkstack?' => 'Vous aimez Linkstack ?',
-  'Support Linkstack' => 'Support LinkStack',
-  'support.msg1' => 'Si vous aimez utiliser Linkstack, nous apprécierions grandement si vous pouviez prendre un moment pour',
+  'Enjoying Linkstack?' => 'Vous aimez LinkUp ?',
+  'Support Linkstack' => 'Support LinkUp',
+  'support.msg1' => 'Si vous aimez utiliser LinkUp, nous apprécierions grandement si vous pouviez prendre un moment pour',
   'support.msg2' => 'donner une étoile à notre projet sur GitHub',
   'support.msg3' => 'Votre soutien nous aidera à atteindre un public plus large et à améliorer la qualité de notre projet.',
   'support.msg4' => 'Si vous êtes capable ',
-  'support.msg5' => 'd\'apporter une contribution financière</a>, même un petit montant nous aiderait à couvrir les coûts de maintenance et d\'amélioration de Linkstack.',
-  'support.msg6' => 'Merci pour votre soutien et de faire partie de la communauté LinkStack !',
+  'support.msg5' => 'd\'apporter une contribution financière</a>, même un petit montant nous aiderait à couvrir les coûts de maintenance et d\'amélioration de LinkUp.',
+  'support.msg6' => 'Merci pour votre soutien et de faire partie de la communauté LinkUp !',
 
 
     /*

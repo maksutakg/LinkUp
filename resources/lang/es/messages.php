@@ -26,7 +26,7 @@ return array (
   'by' => 'por',
 
   'HOME.MESSAGE' => '
-  <p>Controla tu presencia en línea con&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>,
+  <p>Controla tu presencia en línea con&nbsp;<strong>LinkUp</strong>,
    la plataforma de gestión de enlaces <strong>open-source</strong> centrada en la privacidad. Crea una página de perfil personalizable para gestionar <strong>
    todos tus enlaces importantes en un solo lugar</strong> y ofrece a tu público una experiencia de navegación transparente.</p>
   ',
@@ -608,7 +608,7 @@ return array (
 'The server will never store more that two backups at a time' => 'El servidor nunca almacenará más de dos copias de seguridad a la vez.',
 
 'SMTP.title' => 'Usar el servidor SMTP integrado',
-'SMTP.description' => 'Utiliza el servidor SMTP proporcionado por LinkStack. Puede no ser 100% confiable. Debe estar desactivado para poder usar un servidor SMTP personalizado.',
+'SMTP.description' => 'Utiliza el servidor SMTP proporcionado por LinkUp. Puede no ser 100% confiable. Debe estar desactivado para poder usar un servidor SMTP personalizado.',
 'SMTP.description.alt' => '(Guarda los cambios con "Aplicar cambios" a continuación)',
 'Enable' => 'Habilitar',
 'Custom SMTP server:' => 'Servidor SMTP personalizado:',
@@ -734,10 +734,10 @@ return array (
 */
 
 # Title Tag
-'LinkStack setup' => 'Configuración de LinkStack',
+'LinkStack setup' => 'Configuración de LinkUp',
 
-'Setup LinkStack' => 'Instalación de LinkStack',
-'Welcome to the setup for LinkStack!' => '¡Bienvenido a la configuración de LinkStack!',
+'Setup LinkStack' => 'Instalación de LinkUp',
+'Welcome to the setup for LinkStack!' => '¡Bienvenido a la configuración de LinkUp!',
 'This setup will:' => 'Esta instalación hará:',
 'Check the server dependencies' => '1. Verificar las dependencias del servidor',
 'Setup the database' => '2. Configurar la base de datos',
@@ -793,7 +793,7 @@ return array (
 */
 
 # Title Tag
-'Update LinkStack' => 'Actualizar LinkStack',
+'Update LinkStack' => 'Actualizar LinkUp',
 
 'Latest beta version' => 'Última versión beta',
 'Installed beta version' => 'Versión beta instalada',
@@ -954,7 +954,7 @@ return array (
 
 /*
 |--------------------------------------------------------------------------
-| LinkStack (Links) Page
+| LinkUp (Links) Page
 |--------------------------------------------------------------------------
 |
 | resources/views/littlelink.blade.php
@@ -977,7 +977,7 @@ return array (
 |
 */
 
-'Learn more about LinkStack' => 'Aprende más sobre LinkStack',
+'Learn more about LinkStack' => 'Aprende más sobre LinkUp',
 'Learn more' => 'Aprende más',
 
 /*
@@ -1003,14 +1003,14 @@ return array (
 # Help Us Out Notification
 'Hide this notification' => 'Ocultar esta notificación',
 'Help Us Out' => 'Ayúdanos',
-'Enjoying Linkstack?' => '¿Te gusta Linkstack?',
-'Support Linkstack' => 'Apoya a LinkStack',
-'support.msg1' => 'Si te gusta usar Linkstack, apreciaríamos mucho si pudieras tomar un momento para',
+'Enjoying Linkstack?' => '¿Te gusta LinkUp?',
+'Support Linkstack' => 'Apoya a LinkUp',
+'support.msg1' => 'Si te gusta usar LinkUp, apreciaríamos mucho si pudieras tomar un momento para',
 'support.msg2' => 'dar una estrella a nuestro proyecto en GitHub',
 'support.msg3' => 'Tu apoyo nos ayudará a llegar a un público más amplio y a mejorar la calidad de nuestro proyecto.',
 'support.msg4' => 'Si puedes',
-'support.msg5' => 'hacer una contribución financiera</a>, incluso una pequeña cantidad nos ayudaría a cubrir los costos de mantenimiento y mejora de Linkstack.',
-'support.msg6' => '¡Gracias por tu apoyo y por ser parte de la comunidad LinkStack!',
+'support.msg5' => 'hacer una contribución financiera</a>, incluso una pequeña cantidad nos ayudaría a cubrir los costos de mantenimiento y mejora de LinkUp.',
+'support.msg6' => '¡Gracias por tu apoyo y por ser parte de la comunidad LinkUp!',
 
 
 /*

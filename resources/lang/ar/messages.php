@@ -20,7 +20,7 @@ return [
     'by' => 'من',
 
     'HOME.MESSAGE' => '
-    <p>خذ السيطرة على وجودك عبر الإنترنت مع <a href="https://linkstack.org/"><strong>LinkStack</strong></a>
+    <p>خذ السيطرة على وجودك عبر الإنترنت مع <strong>LinkUp</strong>
      أمنة، مفتوحة المصدر <strong>منصة لإدارة الروابط</strong>. انشاء صفحة ملف تعريفي قابل للتخصيص والإدارة <strong>
      جميع روابطك الهامة في مكان واحد مريح</strong> وتمنح جمهورك تجربة تصفح سلسة.</p>
      ',
@@ -619,7 +619,7 @@ return [
     'The server will never store more that two backups at a time' => 'لن يقوم الخادم بتخزين أكثر من نسختين احتياطيتين في وقت واحد.',
 
     'SMTP.title' => 'استخدام خادم SMTP المدمج',
-    'SMTP.description' => 'يستخدم خادم SMTP المقدم من LinkStack. قد لا يكون موثوقًا بنسبة 100٪. يجب تعطيله لاستخدام خادم SMTP مخصص.',
+    'SMTP.description' => 'يستخدم خادم SMTP المقدم من LinkUp. قد لا يكون موثوقًا بنسبة 100٪. يجب تعطيله لاستخدام خادم SMTP مخصص.',
     'SMTP.description.alt' => '(قم بحفظ التغييرات باستخدام "تطبيق التغييرات" أدناه)',
     'Enable' => 'تمكين',
     'Custom SMTP server:' => 'خادم SMTP مخصص:',
@@ -751,10 +751,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'إعداد LinkStack',
+    'LinkStack setup' => 'إعداد LinkUp',
 
-    'Setup LinkStack' => 'إعداد LinkStack',
-    'Welcome to the setup for LinkStack!' => 'مرحبًا بك في إعداد LinkStack!',
+    'Setup LinkStack' => 'إعداد LinkUp',
+    'Welcome to the setup for LinkStack!' => 'مرحبًا بك في إعداد LinkUp!',
     'This setup will:' => 'سيقوم هذا الإعداد بـ:',
     'Check the server dependencies' => '1. التحقق من تبعيات الخادم',
     'Setup the database' => '2. إعداد قاعدة البيانات',
@@ -812,7 +812,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'تحديث LinkStack',
+    'Update LinkStack' => 'تحديث LinkUp',
 
     'Latest beta version' => 'أحدث إصدار تجريبي',
     'Installed beta version' => 'الإصدار التجريبي المثبت',
@@ -975,7 +975,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page
+    | LinkUp (Links) Page
     |--------------------------------------------------------------------------
     |
     | resources/views/linkstack/linkstack.blade.php
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'تعرف على المزيد عن LinkStack',
+    'Learn more about LinkStack' => 'تعرف على المزيد عن LinkUp',
     'Learn more' => 'تعرف على المزيد',
 
     /*
@@ -1031,14 +1031,14 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'إخفاء هذا الإشعار',
     'Help Us Out' => 'ساعدنا',
-    'Enjoying Linkstack?' => 'هل تستمتع بـ Linkstack؟',
-    'Support Linkstack' => 'دعم Linkstack',
-    'support.msg1' => 'إذا كنت تستمتع باستخدام Linkstack ، فسنكون ممتنين جدًا إذا استغرقت لحظة لـ',
+    'Enjoying Linkstack?' => 'هل تستمتع بـ LinkUp؟',
+    'Support Linkstack' => 'دعم LinkUp',
+    'support.msg1' => 'إذا كنت تستمتع باستخدام LinkUp ، فسنكون ممتنين جدًا إذا استغرقت لحظة لـ',
     'support.msg2' => 'منح مشروعنا نجمة على GitHub',
     'support.msg3' => 'سيساعد دعمكنا على وصول جمهور أوسع وتحسين جودة مشروعنا.',
     'support.msg4' => 'إذا كنت قادرًا على',
-    'support.msg5' => 'المساهمة المالية</a> ، حتى مبلغ صغير سيساعدنا في تغطية تكاليف الحفاظ على Linkstack وتحسينه.',
-    'support.msg6' => 'شكرًا لدعمكم ولكونكم جزءًا من مجتمع LinkStack!',
+    'support.msg5' => 'المساهمة المالية</a> ، حتى مبلغ صغير سيساعدنا في تغطية تكاليف الحفاظ على LinkUp وتحسينه.',
+    'support.msg6' => 'شكرًا لدعمكم ولكونكم جزءًا من مجتمع LinkUp!',
 
 
     /*

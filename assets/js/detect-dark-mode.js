@@ -6,3 +6,6 @@ if (!colorMode || (colorMode !== 'light' && colorMode !== 'dark')) {
   colorMode = 'auto';
   localStorage.setItem('color-mode', colorMode);
 }
+
+// Paint the browser's blank canvas in the right scheme before any CSS loads (no white frame between pages)
+document.documentElement.style.colorScheme = colorMode === 'auto' ? 'light dark' : colorMode;

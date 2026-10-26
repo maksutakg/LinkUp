@@ -20,7 +20,7 @@ return [
     'by' => 'от',
 
     'HOME.MESSAGE' => '
-    <p>Управляйте своим присутствием в Интернете с помощью <a href="https://linkstack.org/"><strong>LinkStack</strong></a> — ориентированной
+    <p>Управляйте своим присутствием в Интернете с помощью <strong>LinkUp</strong> — ориентированной
      на конфиденциальность, открытой <strong>платформы управления ссылками</strong>. Создайте настраиваемую страницу профиля для управления
      <strong>всеми важными ссылками в одном удобном месте</strong> и предоставьте своей аудитории удобный бесперебойный просмотр.</p>
      ',
@@ -619,7 +619,7 @@ return [
     'The server will never store more that two backups at a time' => 'Сервер никогда не будет хранить более двух резервных копий одновременно.',
 
     'SMTP.title' => 'Используйте встроенный SMTP-сервер',
-    'SMTP.description' => 'Использует SMTP-сервер, предоставленный в комплекте с LinkStack. Может быть не на 100% надёжным. Для использования пользовательского SMTP-сервера необходимо отключить SMTP-сервер, предоставленный LinkStack.',
+    'SMTP.description' => 'Использует SMTP-сервер, предоставленный в комплекте с LinkUp. Может быть не на 100% надёжным. Для использования пользовательского SMTP-сервера необходимо отключить SMTP-сервер, предоставленный LinkUp.',
     'SMTP.description.alt' => '(Сохраните изменения, нажав «Применить изменения» ниже)',
     'Enable' => 'Включить',
     'Custom SMTP server:' => 'Свой SMTP-сервер:',
@@ -640,7 +640,7 @@ return [
     'REGISTER_AUTH.title' => 'Включить проверку электронной почты',
     'REGISTER_AUTH.description' => 'Определяет, должны ли пользователи подтверждать свой адрес электронной почты при регистрации.',
     'ALLOW_REGISTRATION.title' => 'Включить регистрацию',
-    'ALLOW_REGISTRATION.description' => 'Определяет, могут ли пользователи регистрироваться в вашем приложении LinkStack.',
+    'ALLOW_REGISTRATION.description' => 'Определяет, могут ли пользователи регистрироваться в вашем приложении LinkUp.',
     'NOTIFY_EVENTS.title' => 'Оповещать о событиях',
     'NOTIFY_EVENTS.description' => 'Включает отображение уведомлений о выполнении какого-либо события.',
     'NOTIFY_UPDATES.title' => 'Уведомлять об обновлениях',
@@ -751,15 +751,15 @@ return [
     */
 
     # Заголовок
-    'LinkStack setup' => 'Установка LinkStack',
+    'LinkStack setup' => 'Установка LinkUp',
 
-    'Setup LinkStack' => 'Установка LinkStack',
-    'Welcome to the setup for LinkStack!' => 'Добро пожаловать в установку LinkStack!',
+    'Setup LinkStack' => 'Установка LinkUp',
+    'Welcome to the setup for LinkStack!' => 'Добро пожаловать в установку LinkUp!',
     'This setup will:' => 'Во время установки будут осуществлены следующие шаги:',
     'Check the server dependencies' => '1. Проверка необходимых для работы зависимостей сервера',
     'Setup the database' => '2. Установка базы данных',
     'Create the admin user' => '3. Создание учётной записи администратора',
-    'Configure the app' => '4. Настройка LinkStack',
+    'Configure the app' => '4. Настройка LinkUp',
     'Choose a language' => 'Выбор языка',
     'setup.disclaimer' => 'Продолжая, вы соглашаетесь соблюдать наши',
     'Terms and Conditions' => 'условия и положения',
@@ -812,15 +812,15 @@ return [
     */
 
     # Заголовок
-    'Update LinkStack' => 'Обновить LinkStack',
+    'Update LinkStack' => 'Обновить LinkUp',
 
     'Latest beta version' => 'Последняя БЕТА версия',
     'Installed beta version' => 'Установленная БЕТА версия',
     'none' => 'пусто',
-    'You need to update to the latest mainline release' => 'Вам необходимо обновиться до последней версии LinkStack',
-    'You’re running the latest mainline release' => 'Вы используете последнюю (самую актуальную) версию LinkStack',
+    'You need to update to the latest mainline release' => 'Вам необходимо обновиться до последней версии LinkUp',
+    'You’re running the latest mainline release' => 'Вы используете последнюю (самую актуальную) версию LinkUp',
 
-    'update.manually' => 'Вы можете обновить свою установку LinkStack автоматически или загрузить обновление и установить его вручную:',
+    'update.manually' => 'Вы можете обновить свою установку LinkUp автоматически или загрузить обновление и установить его вручную:',
     'update.windows' => 'Пользователи Windows могут воспользоваться альтернативным средством обновления. Это средство обновления не создаёт резервную копию. Если хотите, используйте его по своему усмотрению.',
     'Update automatically' => 'Автоматическое обновление',
 
@@ -975,7 +975,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page / Страница LinkStack (Ссылки)
+    | LinkUp (Links) Page / Страница LinkUp (Ссылки)
     |--------------------------------------------------------------------------
     |
     | resources/views/linkstack/linkstack.blade.php
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Узнать больше о LinkStack',
+    'Learn more about LinkStack' => 'Узнать больше о LinkUp',
     'Learn more' => 'Узнать больше',
 
     /*
@@ -1031,14 +1031,14 @@ return [
     # Уведомление «Помогите нам»
     'Hide this notification' => 'Скрыть это уведомление',
     'Help Us Out' => 'Помогите нам',
-    'Enjoying Linkstack?' => 'Вам нравиться Linkstack?',
-    'Support Linkstack' => 'Поддержать Linkstack',
-    'support.msg1' => 'Если вам нравится пользоваться Linkstack, мы были бы очень признательны, если вы найдёте минутку, чтобы',
+    'Enjoying Linkstack?' => 'Вам нравиться LinkUp?',
+    'Support Linkstack' => 'Поддержать LinkUp',
+    'support.msg1' => 'Если вам нравится пользоваться LinkUp, мы были бы очень признательны, если вы найдёте минутку, чтобы',
     'support.msg2' => 'поставь нашему проекту звёздочку на GitHub',
     'support.msg3' => 'Ваша поддержка поможет нам охватить более широкую аудиторию и улучшить качество нашего продукта.',
     'support.msg4' => 'Если вы в состоянии',
-    'support.msg5' => 'внесите финансовый вклад, даже небольшая сумма поможет нам покрыть расходы на поддержание и улучшение Linkstack.',
-    'support.msg6' => 'Спасибо вам за вашу поддержку и за то, что вы являетесь частью замечательного сообщества LinkStack!',
+    'support.msg5' => 'внесите финансовый вклад, даже небольшая сумма поможет нам покрыть расходы на поддержание и улучшение LinkUp.',
+    'support.msg6' => 'Спасибо вам за вашу поддержку и за то, что вы являетесь частью замечательного сообщества LinkUp!',
 
 
     /*
