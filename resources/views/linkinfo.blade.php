@@ -52,6 +52,12 @@
   </head>
 
 <body>
+    <!-- apply saved color mode before first paint; setting.js does it only at the end of the page, causing a white flash -->
+    <script>
+      var bodyColorMode = localStorage.getItem('color-mode');
+      if (bodyColorMode) document.body.classList.add(bodyColorMode);
+      if (bodyColorMode === 'dark' || ((!bodyColorMode || bodyColorMode === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark');
+    </script>
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
             <div class="container-fluid navbar-inner">

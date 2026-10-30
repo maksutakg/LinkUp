@@ -4,6 +4,16 @@
   <meta charset="utf-8">
   <title>{{ucfirst(Request::segment(2))}} - {{env('APP_NAME')}}</title>
 
+  <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
+
+  <!-- keep the old page on screen and cross-fade to the new one (Chrome/Edge 126+, Safari 18.2+; others just navigate) -->
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition { navigation: auto; }
+      ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 90ms; }
+    }
+  </style>
+
 @include('layouts.analytics')
 
       <!-- Favicon -->
@@ -47,6 +57,12 @@
 </style>
 </head>
 <body>
+  <!-- apply saved color mode before first paint; setting.js does it only at the end of the page, causing a white flash -->
+  <script>
+    var bodyColorMode = localStorage.getItem('color-mode');
+    if (bodyColorMode) document.body.classList.add(bodyColorMode);
+    if (bodyColorMode === 'dark' || ((!bodyColorMode || bodyColorMode === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark');
+  </script>
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->

@@ -11,6 +11,9 @@ $usrhandl = Auth::user()->littlelink_name;
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>{{env('APP_NAME')}}</title>
 
+      <script>
+        (function(){var m=localStorage.getItem('color-mode');var d=m==='dark'||((!m||m==='auto')&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.style.colorScheme=d?'dark':'light';document.documentElement.style.backgroundColor=d?'#151824':'#f5f6fa';})();
+      </script>
       <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
 
       <!-- keep the old page on screen and cross-fade to the new one (Chrome/Edge 126+, Safari 18.2+; others just navigate) -->
@@ -81,8 +84,8 @@ $usrhandl = Auth::user()->littlelink_name;
     <!-- apply saved color mode before first paint; setting.js does it only at the end of the page, causing a white flash -->
     <script>
       var bodyColorMode = localStorage.getItem('color-mode');
-      document.body.classList.add(bodyColorMode);
-      if (bodyColorMode === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches) document.body.classList.add('dark');
+      if (bodyColorMode) document.body.classList.add(bodyColorMode);
+      if (bodyColorMode === 'dark' || ((!bodyColorMode || bodyColorMode === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark');
     </script>
     
     <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">

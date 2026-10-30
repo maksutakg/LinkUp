@@ -48,7 +48,18 @@
       <link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
       @endif
       
+      <script>
+        (function(){var m=localStorage.getItem('color-mode');var d=m==='dark'||((!m||m==='auto')&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.style.colorScheme=d?'dark':'light';document.documentElement.style.backgroundColor=d?'#151824':'#f5f6fa';})();
+      </script>
       <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
+
+      <!-- keep the old page on screen and cross-fade to the new one (Chrome/Edge 126+, Safari 18.2+; others just navigate) -->
+      <style>
+        @media (prefers-reduced-motion: no-preference) {
+          @view-transition { navigation: auto; }
+          ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 90ms; }
+        }
+      </style>
 
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
@@ -86,6 +97,12 @@
   @endphp
 
   <body class=" " data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
+    <!-- apply saved color mode before first paint; setting.js does it only at the end of the page, causing a white flash -->
+    <script>
+      var bodyColorMode = localStorage.getItem('color-mode');
+      if (bodyColorMode) document.body.classList.add(bodyColorMode);
+      if (bodyColorMode === 'dark' || ((!bodyColorMode || bodyColorMode === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark');
+    </script>
         <!--Nav Start-->
         <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar fixed-top">
           <div class="container-fluid navbar-inner">

@@ -70,6 +70,12 @@ if ($_SERVER['QUERY_STRING'] != '') {
 @endphp
 
   <body>
+    <!-- apply saved color mode before first paint; setting.js does it only at the end of the page, causing a white flash -->
+    <script>
+      var bodyColorMode = localStorage.getItem('color-mode');
+      if (bodyColorMode) document.body.classList.add(bodyColorMode);
+      if (bodyColorMode === 'dark' || ((!bodyColorMode || bodyColorMode === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('dark');
+    </script>
     <div class="container-fluid">
         <div class="align-items-center justify-content-center d-flex min-vh-100">
             <div class="col-10 col-sm-8 col-md-6 col-lg-5">
