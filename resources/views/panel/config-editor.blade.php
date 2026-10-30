@@ -186,8 +186,8 @@
                   @endif
                   
                   @push("sidebar-scripts")
-                  <script src="{{ asset('assets/external-dependencies/jquery-1.11.1.min.js') }}"></script>
-                  <script src="{{ asset('assets/external-dependencies/bootstrap.min.js') }}"></script>
+                  {{-- jquery already loaded via libs.min.js --}}
+                  {{-- bootstrap already loaded via sidebar.blade.php --}}
                   <script>
                   //$('#myTab a').click(function(e) {
                   // e.preventDefault();
@@ -203,7 +203,7 @@
                   // on load of the page: switch to the currently selected tab
                   var hash = window.location.hash;
                   
-                  $('#myTab a[href="' + hash + '"]').tab('show');
+                  function activateConfigTab(targetHref, updateHash) { if (!targetHref || targetHref.charAt(0) !== '#') return; var id = targetHref.substr(1); var $pane = $('.tab-content .tab-pane[id="' + id + '"]'); if (!$pane.length) return; $('#myTab .nav-link').removeClass('active'); $('#myTab a[href="#' + id + '"]').addClass('active'); $('.tab-content > .tab-pane').removeClass('active show'); $pane.addClass('active show'); if (updateHash) window.location.hash = id; if (id === '2' && typeof editor !== 'undefined') editor.resize(); } $(document).on('click', '[data-toggle="tab"]', function(e) { var href = $(this).attr('href'); if (href && href.charAt(0) === '#') { e.preventDefault(); activateConfigTab(href, true); } }); if (window.location.hash) activateConfigTab(window.location.hash, false);
                   
                   var btn = $('#button-top');
                   
@@ -220,7 +220,7 @@
                     $('html, body').animate({scrollTop:280}, '300');
                   });
                   </script>
-                  <script src="{{ asset('assets/external-dependencies/bootstrap.min.js') }}"></script>
+                  {{-- bootstrap already loaded via sidebar.blade.php --}}
                   @endpush
 
                  </div>

@@ -2,6 +2,7 @@
 use App\Models\UserData;
 $GLOBALS['activenotify'] = true;
 $compromised = false;
+if (!function_exists('notification')) {
 function notification($dismiss = '', $ntid, $heading, $body) {
     $closeMSG = __('messages.Close');
     $dismissMSG = __('messages.Dismiss');
@@ -31,7 +32,9 @@ function notification($dismiss = '', $ntid, $heading, $body) {
     </div>
 MODAL;
 }
+}
 
+if (!function_exists('notificationCard')) {
 function notificationCard($ntid, $icon, $heading, $subheading) {
   echo "<a data-bs-target=\"#{$ntid}\" data-bs-toggle=\"modal\" style=\"cursor:pointer!important;\" class=\"iq-sub-card\">
           <div class=\"d-flex align-items-center\">
@@ -45,11 +48,13 @@ function notificationCard($ntid, $icon, $heading, $subheading) {
           </div>
         </a>";
 }
+}
 
 //security check, checks if config files got compromised
 // skipped on `php artisan serve`: the single-threaded server can't answer its own request, so each curl waits for the 3s timeout
 if(auth()->user()->role == 'admin' && php_sapi_name() !== 'cli-server'){
 
+if (!function_exists('getUrlSatusCodesb')) {
 function getUrlSatusCodesb($urlsb, $timeoutsb = 3)
  {
  $chsb = curl_init();
@@ -63,17 +68,13 @@ function getUrlSatusCodesb($urlsb, $timeoutsb = 3)
  curl_close($chsb);
  return $status;
  }
-
-// Files or directories to test if accessible externally
-$url1sb = getUrlSatusCodesb(url('.env'));
-$url2sb = getUrlSatusCodesb(url('database/database.sqlite'));
-
-// sets compromised to true if config files got compromised
-if($url1sb == '200'  or $url2sb == '200') {
-	$compromised = true;
-} else {
-	$compromised = false;
 }
+
+$compromised = \Illuminate\Support\Facades\Cache::remember('security_compromised_check_' . md5(url('')), 600, function () {
+    $url1sb = getUrlSatusCodesb(url('.env'));
+    $url2sb = getUrlSatusCodesb(url('database/database.sqlite'));
+    return ($url1sb == '200' or $url2sb == '200');
+});
 }
  // end security check
 

@@ -114,8 +114,8 @@
                         <div class="accordion">
                             <div class="accordion-item">
                               <h2 class="accordion-header" id="details-header">
-                                <button class="accordion-button collapsed disabled" type="button" aria-expanded="false" aria-controls="details-collapse">
-                                    <div style="max-height:20px;max-width:20px;" class="spinner-border text-primary" role="status">
+                                <button id="load-theme-updater-btn" class="accordion-button collapsed" type="button" aria-expanded="false" aria-controls="details-collapse">{{__('messages.Theme Updater')}}
+                                    <div id="theme-updater-spinner" style="max-height:20px;max-width:20px;display:none;" class="spinner-border text-primary ms-2" role="status">
                                         <span class="visually-hidden">{{__('messages.Loading...')}}</span>
                                     </div>
                                 </button>
@@ -159,12 +159,13 @@
      </div>   
      @endif 
 
-@endforeach
+@endforeach </section>
 
-<script src="{{ asset('assets/external-dependencies/jquery-1.12.4.min.js') }}"></script>
-</section>
+
+@push('sidebar-scripts')
+
 <script>
-$(window).on('load', function() {
+$(document).one('click', '#load-theme-updater-btn', function() { $('#theme-updater-spinner').show();
     var placeholder = $('#ajax-container');
     var lazyElement = $('#my-lazy-element');
     
@@ -173,12 +174,14 @@ $(window).on('load', function() {
         success: function(response) {
             placeholder.replaceWith(lazyElement);
             
-            lazyElement.html(response);
+            lazyElement.html(response); $('#details-collapse').addClass('show'); $('#details-header .accordion-button').removeClass('collapsed').attr('aria-expanded', 'true');
         }
     });
 });
 </script>
-<script type="text/javascript">$("iframe").load(function() { $("iframe").contents().find("a").each(function(index) { $(this).on("click", function(event) { event.preventDefault(); event.stopPropagation(); }); }); });</script>
+<script type="text/javascript">$("iframe").on("load", function() { $(this).contents().find("a").each(function(index) { $(this).on("click", function(event) { event.preventDefault(); event.stopPropagation(); }); }); });</script>
+@endpush
+
 
 @push('sidebar-scripts')
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -200,7 +203,7 @@ $(window).on('load', function() {
                             <a style="cursor:pointer;" onclick="setTheme('default')">
                               <div class="d-flex justify-content-between">
                                  <div>
-                                    <img draggable="false" class="bd-placeholder-img bd-placeholder-img-lg img-fluid" src="{{url('assets/linkstack/images/themes/default.png')}}">
+                                    <img draggable="false" loading="lazy" class="bd-placeholder-img bd-placeholder-img-lg img-fluid" src="{{url('assets/linkstack/images/themes/default.png')}}">
                                  </div>
                               </div>
                               <div class="text-center">
@@ -233,7 +236,7 @@ $(window).on('load', function() {
                                                                 <a style="cursor:pointer;" onclick="setTheme('{{$entry}}')">
                                                                   <div class="d-flex justify-content-between">
                                                                      <div>
-                                                                        <img draggable="false" class="bd-placeholder-img bd-placeholder-img-lg img-fluid" src="{{url('themes/'.$entry.'/preview.png')}}">
+                                                                        <img draggable="false" loading="lazy" class="bd-placeholder-img bd-placeholder-img-lg img-fluid" src="{{url('themes/'.$entry.'/preview.png')}}">
                                                                      </div>
                                                                   </div>
                                                                   <div class="text-center">

@@ -12,53 +12,16 @@ if (!function_exists('preloadDirectoryFiles')) {
      * @param int $ttl Cache time in seconds
      * @return array Array of filenames
      */
-    function preloadDirectoryFiles(string $directory, string $cacheKey, int $ttl = 3600): array
+    function preloadDirectoryFiles(string $directory, string $cacheKey, int $ttl = 3600, bool $refresh = false): array
     {
         static $memoryCache = [];
 
         // Return from memory if already loaded
-        if (isset($memoryCache[$directory])) {
+        if (!$refresh && isset($memoryCache[$directory])) {
             return $memoryCache[$directory];
         }
 
-        $files = [];
-        $fingerprint = md5(json_encode(scandir($directory)));
-
-        // Try Redis first
-        if (class_exists('Redis')) {
-            try {
-                $cached = Redis::get($cacheKey);
-                if ($cached) {
-                    $cached = json_decode($cached, true);
-                    if (isset($cached['fingerprint']) && $cached['fingerprint'] === $fingerprint) {
-                        $memoryCache[$directory] = $cached['files'];
-                        return $cached['files'];
-                    }
-                }
-            } catch (\Exception $e) {
-                // Redis not available, fallback to local memory
-            }
-        }
-
-        // Scan directory and cache
-        $files = scandir($directory);
-
-        // Cache in Redis if possible
-        $data = [
-            'fingerprint' => $fingerprint,
-            'files' => $files
-        ];
-        if (class_exists('Redis')) {
-            try {
-                Redis::setex($cacheKey, $ttl, json_encode($data));
-            } catch (\Exception $e) {
-                // fallback silently
-            }
-        } else {
-            // Laravel cache fallback
-            Cache::put($cacheKey, $data, $ttl);
-        }
-
+        $files = is_dir($directory) ? (scandir($directory) ?: []) : [];
         $memoryCache[$directory] = $files;
 
         return $files;
@@ -73,6 +36,15 @@ function findFile($name)
     $pattern = '/^' . preg_quote($name, '/') . '(_\w+)?\.\w+$/i';
     foreach ($files as $file) {
         if (preg_match($pattern, $file)) {
+            if (!file_exists($directory . $file)) {
+                $files = preloadDirectoryFiles($directory, 'linkstack_images_files', 3600, true);
+                break;
+            }
+            return $file;
+        }
+    }
+    foreach ($files as $file) {
+        if (preg_match($pattern, $file) && file_exists($directory . $file)) {
             return $file;
         }
     }
@@ -87,6 +59,15 @@ function findAvatar($name)
     $pattern = '/^' . preg_quote($name, '/') . '(_\w+)?\.\w+$/i';
     foreach ($files as $file) {
         if (preg_match($pattern, $file)) {
+            if (!file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
+                $files = preloadDirectoryFiles($directory, 'assets_img_files', 3600, true);
+                break;
+            }
+            return "assets/img/" . $file;
+        }
+    }
+    foreach ($files as $file) {
+        if (preg_match($pattern, $file) && file_exists($directory . DIRECTORY_SEPARATOR . $file)) {
             return "assets/img/" . $file;
         }
     }
@@ -101,6 +82,15 @@ function findBackground($name)
     $pattern = '/^' . preg_quote($name, '/') . '(_\w+)?\.\w+$/i';
     foreach ($files as $file) {
         if (preg_match($pattern, $file)) {
+            if (!file_exists($directory . $file)) {
+                $files = preloadDirectoryFiles($directory, 'assets_img_background_files', 3600, true);
+                break;
+            }
+            return $file;
+        }
+    }
+    foreach ($files as $file) {
+        if (preg_match($pattern, $file) && file_exists($directory . $file)) {
             return $file;
         }
     }

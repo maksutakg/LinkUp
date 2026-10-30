@@ -176,7 +176,7 @@ deleteButton.addEventListener('click', deleteSelectedUsers);
 @endpush
 
 @push('sidebar-scripts')
-<livewire:scripts />
+{!! preg_replace('/<script[^>]+src="[^"]*livewire\.js[^"]*"[^>]*><\/script>/i', '', \Livewire\Livewire::scripts()) !!}
 <script src="{{url('assets/js/livewire-sortable.js')}}"></script>
 @endpush
 

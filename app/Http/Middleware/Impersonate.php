@@ -12,7 +12,7 @@ class Impersonate
 {
     public function handle($request, Closure $next)
     {
-      if(Schema::hasColumn('users', 'auth_as')) {
+      if(Auth::check() && array_key_exists('auth_as', Auth::user()->getAttributes())) {
         $adminUser = User::where('role', 'admin')->where(function ($query) {
             $query->where('auth_as', '!=', null)
                 ->where('auth_as', '!=', '');

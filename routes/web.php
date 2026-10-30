@@ -25,7 +25,7 @@ use App\Models\User;
 // Prevents section below from being run by 'composer update'
 if(file_exists(base_path('storage/app/ISINSTALLED'))){
   // generates new APP KEY if no one is set
-  if(EnvEditor::getKey('APP_KEY')==''){try{Artisan::call('key:generate');} catch (exception $e) {}}
+  if(env('APP_KEY')=='' && \GeoSot\EnvEditor\Facades\EnvEditor::getKey('APP_KEY')==''){try{Artisan::call('key:generate');} catch (exception $e) {}}
  
   // copies template meta config if none is present
   if(!file_exists(base_path("config/advanced-config.php"))){copy(base_path('storage/templates/advanced-config.php'), base_path('config/advanced-config.php'));}
@@ -189,7 +189,7 @@ Route::group([
     Route::group(['namespace'=>'App\Http\Controllers\Admin', 'prefix'=>'admin', 'as'=>'admin'],function() {
         //Route::resource('/admin/linktype', LinkTypeController::class);
         Route::resources([
-            'linktype'=>LinkTypeController::class
+            'linktype'=>'LinkTypeController'
         ]);
     });
 

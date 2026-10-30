@@ -10,6 +10,8 @@ class UserData extends Model
     protected $table = 'users';
     protected $fillable = ['image'];
 
+    private static array $runtimeCache = [];
+
     public static function saveData($userId, $key, $value)
     {
         $userData = self::getCachedUserData($userId);
@@ -61,13 +63,18 @@ class UserData extends Model
 
     private static function getCachedUserData($userId)
     {
-        return Cache::remember('user_data_' . $userId, now()->addMinutes(10), function () use ($userId) {
+        if (array_key_exists($userId, self::$runtimeCache)) {
+            return self::$runtimeCache[$userId];
+        }
+
+        return self::$runtimeCache[$userId] = Cache::remember('user_data_' . $userId, now()->addMinutes(10), function () use ($userId) {
             return self::where('id', $userId)->first();
         });
     }
 
     private static function cacheUserData($userId, $userData)
     {
+        self::$runtimeCache[$userId] = $userData;
         Cache::put('user_data_' . $userId, $userData, now()->addMinutes(10));
     }
 }

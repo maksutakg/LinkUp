@@ -3,7 +3,7 @@
 @section('content')
 
 @push('sidebar-stylesheets')
-<script src="{{ asset('assets/external-dependencies/fontawesome.js') }}" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/external-dependencies/fontawesome.js') }}" crossorigin="anonymous" defer></script>
 @endpush
 
 <div class="conatiner-fluid content-inner mt-n5 py-0">
@@ -16,7 +16,7 @@
                    <div class="col-sm-12">  
   
                     @push('sidebar-stylesheets')
-                    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+                    {{-- jquery already loaded via libs.min.js --}}
                     @endpush
                     
                     <section class='text-gray-400'>
@@ -120,7 +120,7 @@
 @push("sidebar-scripts")
 <script>
 $(function() {
-    LoadLinkTypeParams($("input[name='typename']").val() , $("input[name=linkid]").val());
+    var initialHtml = @json(app(\App\Http\Controllers\LinkTypeViewController::class)->getParamForm($typename, $LinkID)->render()); $("#link_params").html(initialHtml); setTimeout(function() { document.dispatchEvent(new Event('contentLoaded')); }, 50);
 
     $('.doSelectLinkType').on('click', function() {
         $("input[name='typename']").val($(this).data('typeid'));

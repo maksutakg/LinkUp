@@ -1,4 +1,15 @@
-<?php use App\Models\Page; ?>
+<?php use App\Models\Page;
+if (!function_exists('cfgEnv')) {
+  function cfgEnv($key, $default = null)
+  {
+    static $map = null;
+    if ($map === null) {
+      $map = \GeoSot\EnvEditor\Facades\EnvEditor::getEnvFileContent()->reject(fn($e) => $e->isSeparator())->reverse()->keyBy('key');
+    }
+    $entry = $map->get($key);
+    return $entry ? $entry->getValue($default) : $default;
+  }
+} ?>
 <style>
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
   input[type=checkbox],
@@ -156,70 +167,104 @@ input[type=radio] + label {
 </style>
 
 <?php 
-function toggle($key){
-	echo '
-    <form id="'.$key.'-form" action="'.route('editConfig').'" enctype="multipart/form-data" method="post">
+if (!function_exists('toggle')) {
+  function toggle($key)
+  {
+    echo '
+    <form id="' . $key . '-form" action="' . route('editConfig') . '" enctype="multipart/form-data" method="post">
 	<div class="form-group col-lg-8">
 	<input value="toggle" name="type" style="display:none;" type="text" class="form-control form-control-lg" required>
-	<input value="'.$key.'" name="entry" style="display:none;" type="text" class="form-control form-control-lg" required>
-	<h5 style="margin-top:50px">'; echo __('messages.'.$key.'.title'); echo '</h5>
-    <p class="text-muted">'; echo __('messages.'.$key.'.description'); echo '</p>
+	<input value="' . $key . '" name="entry" style="display:none;" type="text" class="form-control form-control-lg" required>
+	<h5 style="margin-top:50px">';
+    echo __('messages.' . $key . '.title');
+    echo '</h5>
+    <p class="text-muted">';
+    echo __('messages.' . $key . '.description');
+    echo '</p>
 	<div class="input-group">
-	<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="'.$key.'"'; if(EnvEditor::getKey($key) == 'false'){echo '/>';}else{echo 'checked>';} echo '<label for="'.$key.'" class="form-check-label">'.__('messages.Enable').'</label></div>
+	<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="' . $key . '"';
+    if (cfgEnv($key) == 'false') {
+      echo '/>';
+    } else {
+      echo 'checked>';
+    }
+    echo '<label for="' . $key . '" class="form-check-label">' . __('messages.Enable') . '</label></div>
 	</div></div>
-    <input type="hidden" name="_token" value="'.csrf_token().'">
+    <input type="hidden" name="_token" value="' . csrf_token() . '">
     <script type="text/javascript">
-document.getElementById("'.$key.'-form").addEventListener("change", function() { 
+document.getElementById("' . $key . '-form").addEventListener("change", function() { 
     this.submit(); 
 });
 </script>
     </form>
 	';
+  }
 }
 ?>
 
 
 <?php 
-function toggle2($key){
-	echo '
-    <form id="'.$key.'-form" action="'.route('editConfig').'" enctype="multipart/form-data" method="post">
+if (!function_exists('toggle2')) {
+  function toggle2($key)
+  {
+    echo '
+    <form id="' . $key . '-form" action="' . route('editConfig') . '" enctype="multipart/form-data" method="post">
 	<div class="form-group col-lg-8">
 	<input value="toggle2" name="type" style="display:none;" type="text" class="form-control form-control-lg" required>
-	<input value="'.$key.'" name="entry" style="display:none;" type="text" class="form-control form-control-lg" required>
-	<h5 style="margin-top:50px">'; echo __('messages.'.$key.'.title'); echo '</h5>
-    <p class="text-muted">'; echo __('messages.'.$key.'.description'); echo '</p>
+	<input value="' . $key . '" name="entry" style="display:none;" type="text" class="form-control form-control-lg" required>
+	<h5 style="margin-top:50px">';
+    echo __('messages.' . $key . '.title');
+    echo '</h5>
+    <p class="text-muted">';
+    echo __('messages.' . $key . '.description');
+    echo '</p>
 	<div class="input-group">
-	<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="'.$key.'"'; if(EnvEditor::getKey($key) == 'auth'){echo '/>';}else{echo 'checked>';} echo '<label for="'.$key.'" class="form-check-label">'.__('messages.Enable').'</label></div>
+	<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="' . $key . '"';
+    if (cfgEnv($key) == 'auth') {
+      echo '/>';
+    } else {
+      echo 'checked>';
+    }
+    echo '<label for="' . $key . '" class="form-check-label">' . __('messages.Enable') . '</label></div>
 	</div></div>
-    <input type="hidden" name="_token" value="'.csrf_token().'">
+    <input type="hidden" name="_token" value="' . csrf_token() . '">
     <script type="text/javascript">
-document.getElementById("'.$key.'-form").addEventListener("change", function() { 
+document.getElementById("' . $key . '-form").addEventListener("change", function() { 
     this.submit(); 
 });
 </script>
     </form>
 	';
+  }
 }
 ?>
 
 
 <?php 
-function text($key){
-    $configValue = str_replace('"', "", EnvEditor::getKey($key));
-	echo '
-    <form id="'.$key.'-form" action="'.route('editConfig').'" enctype="multipart/form-data" method="post">
+if (!function_exists('text')) {
+  function text($key)
+  {
+    $configValue = str_replace('"', "", cfgEnv($key));
+    echo '
+    <form id="' . $key . '-form" action="' . route('editConfig') . '" enctype="multipart/form-data" method="post">
     <div class="form-group col-lg-8">
     <input value="text" name="type" style="display:none;" type="text" class="form-control form-control-lg" required>
-    <input value="'.$key.'" name="entry" style="display:none;" type="text" class="form-control form-control-lg" required>
-	<h5 style="margin-top:50px">'; echo __('messages.'.$key.'.title'); echo '</h5>
-    <p class="text-muted">'; echo __('messages.'.$key.'.description'); echo '</p>
+    <input value="' . $key . '" name="entry" style="display:none;" type="text" class="form-control form-control-lg" required>
+	<h5 style="margin-top:50px">';
+    echo __('messages.' . $key . '.title');
+    echo '</h5>
+    <p class="text-muted">';
+    echo __('messages.' . $key . '.description');
+    echo '</p>
     <div class="input-group">
-    <input type="text" class="form-control form-control-lg" style="border-radius:.25rem;max-width:600px" class="form-control" name="value" value="'.$configValue.'" required>';  echo '
-    <input type="hidden" name="_token" value="'.csrf_token().'">
-	<button  type="submit" class="btn btn-primary">'.__('messages.Apply').'</button>
+    <input type="text" class="form-control form-control-lg" style="border-radius:.25rem;max-width:600px" class="form-control" name="value" value="' . $configValue . '" required>';
+    echo '
+    <input type="hidden" name="_token" value="' . csrf_token() . '">
+	<button  type="submit" class="btn btn-primary">' . __('messages.Apply') . '</button>
     </div></div>
     </form>
 	';
+  }
 }
 ?>
 
@@ -227,19 +272,19 @@ function text($key){
 <a name="Application"><h2 class="ch2">{{__('messages.Application')}}</h2></a>
 
 @if(!config('linkstack.single_user_mode'))
-{{toggle('ALLOW_REGISTRATION')}}
+  {{toggle('ALLOW_REGISTRATION')}}
 
 
-{{toggle2('REGISTER_AUTH')}}
+  {{toggle2('REGISTER_AUTH')}}
 
 
-{{toggle('MANUAL_USER_VERIFICATION')}}
+  {{toggle('MANUAL_USER_VERIFICATION')}}
 @endif
 
 {{text('ADMIN_EMAIL')}}
 
 {{-- start home url --}}
-<?php $configValue2 = str_replace('"', "", EnvEditor::getKey('HOME_URL')); ?>
+<?php $configValue2 = str_replace('"', "", cfgEnv('HOME_URL')); ?>
 <form id="home-url-form" action="{{route('editConfig')}}" enctype="multipart/form-data" method="post">
 <div class="form-group col-lg-8">
 <input value="homeurl" name="type" style="display:none;" type="text" class="form-control form-control-lg" required>
@@ -252,12 +297,16 @@ function text($key){
 @if($configValue2 != '')<option>{{$configValue2}}</option>@endif
 @if($configValue2 != 'default')<option value="default">{{__('messages.default')}}</option>@endif
 <?php $users = DB::table('users')->where('littlelink_name', '!=', '')->get();
-foreach($users as $user){if($user->littlelink_name != $configValue2){echo '<option>' . $user->littlelink_name . '</option>';}} ?>
+foreach ($users as $user) {
+  if ($user->littlelink_name != $configValue2) {
+    echo '<option>' . $user->littlelink_name . '</option>';
+  }
+} ?>
 </select>
 
 </div></div>
 <input type="hidden" name="_token" value="{{csrf_token()}}">
-<script type="text/javascript">document.getElementById("home-url-form").addEventListener("change", function() { this.submit(); });</script>
+<script type="text/javascript">document.getElementById("home-url-form").addEventListener("change", function () { this.submit(); });</script>
 </form>
 {{-- end home url --}}
 
@@ -323,13 +372,17 @@ foreach($users as $user){if($user->littlelink_name != $configValue2){echo '<opti
 <h5 style="margin-top:50px">{{__('messages.MAINTENANCE_MODE.title')}}</h5>
 <p class="text-muted">{{__('messages.MAINTENANCE_MODE.description')}}</p>
 <div class="input-group">
-<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="MAINTENANCE_MODE" <?php if(EnvEditor::getKey('MAINTENANCE_MODE') == 'true' or file_exists(base_path("storage/MAINTENANCE"))){echo 'checked>';}else{echo '/>';} ?><label for="MAINTENANCE_MODE" class="form-check-label">{{__('messages.Enable')}}</label></div>
+<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="MAINTENANCE_MODE" <?php if (cfgEnv('MAINTENANCE_MODE') == 'true' or file_exists(base_path("storage/MAINTENANCE"))) {
+  echo 'checked>';
+} else {
+  echo '/>';
+} ?><label for="MAINTENANCE_MODE" class="form-check-label">{{__('messages.Enable')}}</label></div>
 </div></div>
 <input type="hidden" name="_token" value="{{csrf_token()}}">
 <script type="text/javascript">
-document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", function() { 
-    this.submit(); 
-});
+  document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", function () {
+    this.submit();
+  });
 </script>
 </form>
 {{-- end MAINTENANCE_MODE --}}
@@ -342,7 +395,7 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 
 
 @if(!config('linkstack.single_user_mode'))
-{{toggle('ENABLE_SOCIAL_LOGIN')}}
+  {{toggle('ENABLE_SOCIAL_LOGIN')}}
 @endif
 
 
@@ -358,7 +411,11 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 <h5 style="margin-top:50px">{{__('messages.SMTP.title')}}</h5>
 <p class="text-muted">{{__('messages.SMTP.description')}}<br>{{__('messages.SMTP.description.alt')}}</p>
 <div class="input-group">
-<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="toggle-smtp" <?php if(env('MAIL_MAILER') != 'built-in'){echo '/>';}else{echo 'checked>';} ?> <label for="toggle-smtp" class="form-check-label">{{__('messages.Enable')}}</label></div>
+<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="toggle-smtp" <?php if (env('MAIL_MAILER') != 'built-in') {
+  echo '/>';
+} else {
+  echo 'checked>';
+} ?> <label for="toggle-smtp" class="form-check-label">{{__('messages.Enable')}}</label></div>
 </div></div>
 <input type="hidden" name="_token" value="{{csrf_token()}}">
 <div style="max-width: 600px; padding-left: 20px;">
@@ -382,10 +439,10 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 <div class="form-group col-lg-8">
   <br><br><h5>{{__('messages.Test E-Mail setup:')}}</h5>
   @if (session('success'))
-  <div class="alert alert-success">
-      {{ session('success') }}
-  </div>
-@elseif (session('fail'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+  @elseif (session('fail'))
   <div class="alert alert-danger">
       {{ session('fail') }}
   </div>
@@ -404,7 +461,7 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 {{text('TITLE_FOOTER_HOME')}}
 
 @php
-    $configValue = str_replace('"', "", EnvEditor::getKey('HOME_FOOTER_LINK'));
+  $configValue = str_replace('"', "", cfgEnv('HOME_FOOTER_LINK'));
 @endphp
     <form id="HOME_FOOTER_LINK-form" action="{{route('editConfig')}}" enctype="multipart/form-data" method="post">
     <div class="form-group col-lg-8">
@@ -439,16 +496,20 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 <h5 style="margin-top:50px">{{__('messages.Debug.title')}}</h5>
 <p class="text-muted">{{__('messages.Debug.description')}}</p>
 <div class="input-group">
-<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="toggle-debug" <?php if(EnvEditor::getKey('APP_DEBUG') == 'false'){echo '/>';}else{echo 'checked>';} ?> <label for="toggle-debug" class="form-check-label">{{__('messages.Enable')}}</label></div>
+<div class="mb-3 form-check form-switch toggle-btn"><input name="toggle" class="switch toggle-btn" type="checkbox" id="toggle-debug" <?php if (cfgEnv('APP_DEBUG') == 'false') {
+  echo '/>';
+} else {
+  echo 'checked>';
+} ?> <label for="toggle-debug" class="form-check-label">{{__('messages.Enable')}}</label></div>
 </div></div>
 <input type="hidden" name="_token" value="{{csrf_token()}}">
-<script type="text/javascript">document.getElementById("debug-form").addEventListener("change", function() { this.submit(); });</script>
+<script type="text/javascript">document.getElementById("debug-form").addEventListener("change", function () { this.submit(); });</script>
 </form>
 {{-- end debug settings --}}
 
 {{-- start language --}}
 <a name="Language"><h2 class="ch2">{{__('messages.Language')}}</h2></a>
-<?php $configValue2 = str_replace('"', "", EnvEditor::getKey('LOCALE')); ?>
+<?php $configValue2 = str_replace('"', "", cfgEnv('LOCALE')); ?>
 <form id="language-form" action="{{route('editConfig')}}" enctype="multipart/form-data" method="post">
     <div class="form-group col-lg-8">
         <input value="homeurl" name="type" style="display:none;" type="text" class="form-control form-control-lg" required>
@@ -458,30 +519,30 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
         <div class="input-group">
             <select style="max-width:600px" class="form-control" name="value">
                 @if($configValue2 != '')
-                    <option>{{$configValue2}}</option>
+                  <option>{{$configValue2}}</option>
                 @endif
                 <?php
-                try {
-                    $langFolders = array_filter(glob(base_path('resources/lang') . '/*'), 'is_dir');
-                } catch (\Exception $e) {
-                    $langFolders = [];
-                }
+try {
+  $langFolders = array_filter(glob(base_path('resources/lang') . '/*'), 'is_dir');
+} catch (\Exception $e) {
+  $langFolders = [];
+}
 
-                foreach($langFolders as $folder) {
-                    $folderName = basename($folder);
-                    if ($folderName != $configValue2) {
-                        echo '<option>' . $folderName . '</option>';
-                    }
-                }
+foreach ($langFolders as $folder) {
+  $folderName = basename($folder);
+  if ($folderName != $configValue2) {
+    echo '<option>' . $folderName . '</option>';
+  }
+}
                 ?>
             </select>
         </div>
     </div>
     <input type="hidden" name="_token" value="{{csrf_token()}}">
     <script type="text/javascript">
-        document.getElementById("language-form").addEventListener("change", function() {
-            this.submit();
-        });
+      document.getElementById("language-form").addEventListener("change", function () {
+        this.submit();
+      });
     </script>
 </form>
 {{-- end language --}}
@@ -489,10 +550,10 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 
 <br><br><br><br><br>
 
-<script src="{{ asset('assets/external-dependencies/jquery-3.4.1.min.js') }}"></script>
+{{-- jquery loaded via libs.min.js --}}
 
 <script type="text/javascript">
-$(document).ready(function () {
+window.addEventListener("DOMContentLoaded", function () {
 
     if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
         $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));

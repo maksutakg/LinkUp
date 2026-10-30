@@ -36,10 +36,10 @@ class AdminController extends Controller
   {
     $userId = Auth::user()->id;
     $littlelink_name = Auth::user()->littlelink_name;
-    $links = Link::where("user_id", $userId)->select("link")->count();
-    $clicks = Link::where("user_id", $userId)->sum("click_number");
+    $links = $userLinksCount ?? 0;
+    $clicks = $userClicksSum ?? 0;
 
-    $userNumber = User::count();
+    $userLinksCount = Link::where("user_id", $userId)->select("link")->count(); $userClicksSum = Link::where("user_id", $userId)->sum("click_number");
     $siteLinks = Link::count();
     $siteClicks = Link::sum("click_number");
 
@@ -50,7 +50,7 @@ class AdminController extends Controller
       "created_at",
       "updated_at",
     )->get();
-    $lastMonthCount = $users
+    $userNumber = $users->count(); $lastMonthCount = $users
       ->where("created_at", ">=", Carbon::now()->subDays(30))
       ->count();
     $lastWeekCount = $users
@@ -69,8 +69,8 @@ class AdminController extends Controller
       ->where("updated_at", ">=", Carbon::now()->subHours(24))
       ->count();
 
-    $links = Link::where("user_id", $userId)->select("link")->count();
-    $clicks = Link::where("user_id", $userId)->sum("click_number");
+    $links = $userLinksCount ?? 0;
+    $clicks = $userClicksSum ?? 0;
     $topLinks = Link::where("user_id", $userId)
       ->orderby("click_number", "desc")
       ->whereNotNull("link")
@@ -78,7 +78,7 @@ class AdminController extends Controller
       ->take(5)
       ->get();
 
-    $pageStats = [
+    $pageStats = []; if (false) $pageStats = [
       "visitors" => [
         "all" => visits("App\Models\User", $littlelink_name)->count(),
         "day" => visits("App\Models\User", $littlelink_name)

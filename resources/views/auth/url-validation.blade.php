@@ -1,5 +1,5 @@
-<script>{!! file_get_contents(base_path("assets/js/jquery.min.js")) !!}</script>
 <script>
+window.addEventListener('DOMContentLoaded', function () {
     $(document).ready(function () {
       var submitBtn = $('#submit-btn');
       
@@ -39,4 +39,5 @@
         }
       });
     });
-  </script>
+});
+</script>

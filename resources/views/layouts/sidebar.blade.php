@@ -17,6 +17,7 @@ $usrhandl = Auth::user()->littlelink_name;
       <style>
         @media (prefers-reduced-motion: no-preference) {
           @view-transition { navigation: auto; }
+          ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 90ms; }
         }
       </style>
 
@@ -27,10 +28,12 @@ $usrhandl = Auth::user()->littlelink_name;
     @include('layouts.notifications')
 
     @php
-    // Update the 'updated_at' timestamp for the currently authenticated user
+    // Update the 'updated_at' timestamp for the currently authenticated user (throttled to 5 min to avoid SQLite write lock on every tab click)
     if (auth()->check()) {
         $user = auth()->user();
-        $user->touch();
+        if (!$user->updated_at || $user->updated_at->lt(now()->subMinutes(5))) {
+            $user->touch();
+        }
     }
     @endphp
 
@@ -429,7 +432,8 @@ $usrhandl = Auth::user()->littlelink_name;
           <div class="footer-body">
               <ul class="left-panel list-inline mb-0 p-0">
                 @if(env('DISPLAY_FOOTER') === true)
-                  @if(env('DISPLAY_FOOTER_HOME') === true)<li class="list-inline-item"><a class="list-inline-item" href="@if(str_replace('"', "", EnvEditor::getKey('HOME_FOOTER_LINK')) === "" ){{ url('') }}@else{{ str_replace('"', "", EnvEditor::getKey('HOME_FOOTER_LINK')) }}@endif">{{footer('Home')}}</a></li>@endif
+                  @php $homeFooterLink = str_replace('"', '', (string) env('HOME_FOOTER_LINK', '')); @endphp
+                  @if(env('DISPLAY_FOOTER_HOME') === true)<li class="list-inline-item"><a class="list-inline-item" href="@if($homeFooterLink === ''){{ url('') }}@else{{ $homeFooterLink }}@endif">{{footer('Home')}}</a></li>@endif
                   @if(env('DISPLAY_FOOTER_TERMS') === true)<li class="list-inline-item"><a class="list-inline-item" href="{{ url('') }}/pages/{{ strtolower(footer('Terms')) }}">{{footer('Terms')}}</a></li>@endif
                   @if(env('DISPLAY_FOOTER_PRIVACY') === true)<li class="list-inline-item"><a class="list-inline-item" href="{{ url('') }}/pages/{{ strtolower(footer('Privacy')) }}">{{footer('Privacy')}}</a></li>@endif
                   @if(env('DISPLAY_FOOTER_CONTACT') === true)<li class="list-inline-item"><a class="list-inline-item" href="{{ url('') }}/pages/{{ strtolower(footer('Contact')) }}">{{footer('Contact')}}</a></li>@endif
@@ -538,18 +542,18 @@ $usrhandl = Auth::user()->littlelink_name;
             <h5 class="mt-4 mb-3">{{__('messages.Sidebar Types')}}</h5>
             <div class="d-grid gap-3 grid-cols-3 mb-4">
               <div class="text-center">
-                <img src="{{asset('assets/images/settings/dark/03.png')}}" alt="mini" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-mini">
-                <img src="{{asset('assets/images/settings/light/03.png')}}" alt="mini" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-mini">
+                <img loading="lazy" src="{{asset('assets/images/settings/dark/03.png')}}" alt="mini" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-mini">
+                <img loading="lazy" src="{{asset('assets/images/settings/light/03.png')}}" alt="mini" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-mini">
                 <span class="mt-2">{{__('messages.Mini')}}</span>
               </div>
               <div class="text-center">
-               <img src="{{asset('assets/images/settings/dark/04.png')}}" alt="hover" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-hover" data-extra-value="sidebar-mini">
-               <img src="{{asset('assets/images/settings/light/04.png')}}" alt="hover" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-hover" data-extra-value="sidebar-mini">
+               <img loading="lazy" src="{{asset('assets/images/settings/dark/04.png')}}" alt="hover" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-hover" data-extra-value="sidebar-mini">
+               <img loading="lazy" src="{{asset('assets/images/settings/light/04.png')}}" alt="hover" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-hover" data-extra-value="sidebar-mini">
                 <span class="mt-2">{{__('messages.Hover')}}</span>
               </div>
               <div class="text-center">
-                 <img src="{{asset('assets/images/settings/dark/05.png')}}" alt="boxed" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-boxed">
-                 <img src="{{asset('assets/images/settings/light/05.png')}}" alt="boxed" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-boxed">
+                 <img loading="lazy" src="{{asset('assets/images/settings/dark/05.png')}}" alt="boxed" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-boxed">
+                 <img loading="lazy" src="{{asset('assets/images/settings/light/05.png')}}" alt="boxed" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-type" data-value="sidebar-boxed">
                 <span class="mt-2">{{__('messages.Boxed')}}</span>
               </div>
             </div>
@@ -557,23 +561,23 @@ $usrhandl = Auth::user()->littlelink_name;
             <h5 class="mt-4 mb-3">{{__('messages.Sidebar Active Style')}}</h5>
             <div class="d-grid gap-3 grid-cols-2 mb-4">
               <div class="text-center">
-                <img src="{{asset('assets/images/settings/dark/06.png')}}" alt="rounded-one-side" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded">
-                <img src="{{asset('assets/images/settings/light/06.png')}}" alt="rounded-one-side" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded">
+                <img loading="lazy" src="{{asset('assets/images/settings/dark/06.png')}}" alt="rounded-one-side" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded">
+                <img loading="lazy" src="{{asset('assets/images/settings/light/06.png')}}" alt="rounded-one-side" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded">
                 <span class="mt-2">{{__('messages.Rounded One Side')}}</span>
               </div>
               <div class="text-center">
-                <img src="{{asset('assets/images/settings/dark/07.png')}}" alt="rounded-all" class="mode dark-img img-fluid btn-border p-0 flex-column active mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded-all">
-                <img src="{{asset('assets/images/settings/light/07.png')}}" alt="rounded-all" class="mode light-img img-fluid btn-border p-0 flex-column active mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded-all">
+                <img loading="lazy" src="{{asset('assets/images/settings/dark/07.png')}}" alt="rounded-all" class="mode dark-img img-fluid btn-border p-0 flex-column active mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded-all">
+                <img loading="lazy" src="{{asset('assets/images/settings/light/07.png')}}" alt="rounded-all" class="mode light-img img-fluid btn-border p-0 flex-column active mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-rounded-all">
                 <span class="mt-2">{{__('messages.Rounded All')}}</span>
               </div>
               <div class="text-center">
-                 <img src="{{asset('assets/images/settings/dark/08.png')}}" alt="pill-one-side" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill">
-                 <img src="{{asset('assets/images/settings/light/09.png')}}" alt="pill-one-side" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill">
+                 <img loading="lazy" src="{{asset('assets/images/settings/dark/08.png')}}" alt="pill-one-side" class="mode dark-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill">
+                 <img loading="lazy" src="{{asset('assets/images/settings/light/09.png')}}" alt="pill-one-side" class="mode light-img img-fluid btn-border p-0 flex-column mb-2" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill">
                 <span class="mt-2">{{__('messages.Pill One Side')}}</span>
               </div>
               <div class="text-center">
-                 <img src="{{asset('assets/images/settings/dark/09.png')}}" alt="pill-all" class="mode dark-img img-fluid btn-border p-0 flex-column" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill-all">
-                 <img src="{{asset('assets/images/settings/light/08.png')}}" alt="pill-all" class="mode light-img img-fluid btn-border p-0 flex-column" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill-all">
+                 <img loading="lazy" src="{{asset('assets/images/settings/dark/09.png')}}" alt="pill-all" class="mode dark-img img-fluid btn-border p-0 flex-column" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill-all">
+                 <img loading="lazy" src="{{asset('assets/images/settings/light/08.png')}}" alt="pill-all" class="mode light-img img-fluid btn-border p-0 flex-column" data-setting="sidebar" data-name="sidebar-item" data-value="navs-pill-all">
                 <span class="mt-2">{{__('messages.Pill All')}}</span>
               </div>
             </div>
@@ -594,21 +598,19 @@ $usrhandl = Auth::user()->littlelink_name;
               @php
               try {
                 $redirectURL = url('').'/'.'u/'.Auth::user()->id;
-
                 $argValues = config('advanced-config.qr_code_gradient') ?? [0, 0, 0, 0, 0, 0, 'diagonal'];
-                list($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7) = $argValues;
+                $qrFormat = extension_loaded('imagick') ? 'png' : 'svg';
+                $qrCacheKey = 'sidebar_qr_' . md5($redirectURL . '|' . json_encode($argValues) . '|' . $qrFormat);
 
-                if (extension_loaded('imagick')) {
-                  $imgSrc = QrCode::format('png')->gradient($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7)->eye('circle')->style('round')->size(1000)->generate($redirectURL);
-                  $imgSrc = base64_encode($imgSrc);
-                  $imgSrc = 'data:image/png;base64,' . $imgSrc;
-                  $imgType = 'png';
-                } else {
-                  $imgSrc = QrCode::gradient($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7)->eye('circle')->style('round')->size(1000)->generate($redirectURL);
-                  $imgSrc = base64_encode($imgSrc);
-                  $imgSrc = 'data:image/svg+xml;base64,' . $imgSrc;
-                  $imgType = 'svg';
-                }
+                [$imgSrc, $imgType] = \Illuminate\Support\Facades\Cache::remember($qrCacheKey, 3600, function () use ($redirectURL, $argValues, $qrFormat) {
+                  list($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7) = $argValues;
+                  if ($qrFormat === 'png') {
+                    $raw = QrCode::format('png')->gradient($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7)->eye('circle')->style('round')->size(1000)->generate($redirectURL);
+                    return ['data:image/png;base64,' . base64_encode($raw), 'png'];
+                  }
+                  $raw = QrCode::gradient($arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7)->eye('circle')->style('round')->size(1000)->generate($redirectURL);
+                  return ['data:image/svg+xml;base64,' . base64_encode($raw), 'svg'];
+                });
 
               } catch(exception $e) {
                 $imgSrc = url('/assets/linkstack/images/themes/no-preview.png');

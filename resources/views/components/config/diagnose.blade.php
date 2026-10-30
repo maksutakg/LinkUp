@@ -9,7 +9,7 @@ $utrue = "<td style=\"text-align: center; cursor: help;\" title=\"".__('messages
 $ufalse = "<td style=\"text-align: center; cursor: help;\" title=\"".__('messages.ufalse')."\"><i class='bi bi-check-lg'></i></td>";
 $unull = "<td style=\"text-align: center; cursor: help;\" title=\"".__('messages.unull')."\">➖</td>";
 
-function getUrlSatusCode($url, $timeout = 3)
+if (!function_exists('getUrlSatusCode')) { function getUrlSatusCode($url, $timeout = 3)
  {
  $ch = curl_init();
  $opts = array(CURLOPT_RETURNTRANSFER => true, // do not output to browser
@@ -20,18 +20,18 @@ function getUrlSatusCode($url, $timeout = 3)
  curl_exec($ch);
  $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
  curl_close($ch);
- return $status;
+ return $status; } } /*
  }
 
 //Files or directories to test if writable
-$wrt1 = is_writable(base_path('.env'));
+*/ $wrt1 = is_writable(base_path('.env'));
 $wrt2 = is_writable(base_path('database/database.sqlite'));
 
 //Files or directories to test if accessible externally
 // skipped on `php artisan serve` (shown as unknown): the single-threaded server can't answer its own request, so each curl waits for the 3s timeout
 $selfRequestable = php_sapi_name() !== 'cli-server';
-$url1 = $selfRequestable ? getUrlSatusCode(url('.env')) : 0;
-$url2 = $selfRequestable ? getUrlSatusCode(url('database/database.sqlite')) : 0;
+[$url1, $url2] = $selfRequestable ? \Illuminate\Support\Facades\Cache::remember('diagnose_url_status_' . md5(url('')), 600, fn() => [getUrlSatusCode(url('.env'), 1), getUrlSatusCode(url('database/database.sqlite'), 1)]) : [0, 0];
+// $url2 cached with $url1 above
 
 ?>
 

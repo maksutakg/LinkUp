@@ -10,6 +10,7 @@
   <a class="btn btn-danger confirmation" href="#" id="restoreDefaultsBtn">{{__('messages.Restore defaults')}}</a>
 </form>
 
+@push('sidebar-scripts')
 <script src="{{ asset('assets/external-dependencies/ace.js') }}" type="text/javascript" charset="utf-8"></script>
 <script>
   var editor = ace.edit("editor");
@@ -32,4 +33,4 @@
       $('#editForm').submit();
     }
   });
-</script>
+</script> @endpush

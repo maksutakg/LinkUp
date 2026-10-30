@@ -25,7 +25,7 @@ if (isset($_COOKIE['LinkCount'])) {
 </style>
 
 @push('sidebar-stylesheets')
-<script src="{{ asset('assets/external-dependencies/fontawesome.js') }}" crossorigin="anonymous"></script>
+<script src="{{ asset('assets/external-dependencies/fontawesome.js') }}" crossorigin="anonymous" defer></script>
 <style>
 @media only screen and (max-width: 1500px) {
   .pre-side{display:none!important;}
@@ -74,8 +74,9 @@ if (isset($_COOKIE['LinkCount'])) {
                                                 <p class="mt-5">{{__('messages.No Link Added')}}</p>
                                               </div>
                                         @else
+                                        @php $buttonsById = Button::whereIn('id', $links->pluck('button_id')->filter()->unique())->get()->keyBy('id'); @endphp
                                         @foreach($links as $link)
-                                        @php $button = Button::find($link->button_id); if(isset($button->name)){$buttonName = $button->name;}else{$buttonName = 0;} @endphp
+                                        @php $button = $buttonsById->get($link->button_id); if(isset($button->name)){$buttonName = $button->name;}else{$buttonName = 0;} @endphp
                                         @php if($buttonName == "default email"){$buttonName = "email";} if($buttonName == "default email_alt"){$buttonName = "email_alt";} @endphp
                                         @if($button && $button->name !== 'icon')
                                         <div class='row h-100 pb-0 mb-2 border rounded hvr-glow w-100' data-id="{{$link->id}}">
@@ -205,7 +206,7 @@ if (isset($_COOKIE['LinkCount'])) {
                             <section class='pre-right text-gray-400 pre-side'>
                                 <h3 class="card-header"><i class="bi bi-window-fullscreen" style="font-style:normal!important;"> {{__('messages.Preview')}}</i></h3>
                                     <div class='card-body p-0 p-md-3'>
-                                            <center><iframe allowtransparency="true" id="frPreview1" onload="this.style.visibility=''" style="visibility:hidden; border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; max-width:500px !important;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe></center>
+                                            <center><iframe allowtransparency="true" id="frPreview1" onload="this.style.visibility=''" style="visibility:hidden; border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; max-width:500px !important;" class='w-100' data-src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe></center>
                                      </div>
                             </section>
                             </div>
@@ -214,7 +215,7 @@ if (isset($_COOKIE['LinkCount'])) {
                             <section style="margin-left:-15px;margin-right:-15px;" style="width:100%!important;" class='pre-bottom text-gray-400 pre-side'>
                                 <h3 class="card-header"><i class="bi bi-window-fullscreen" style="font-style:normal!important;">{{__('messages.Preview')}}</i></h3>
                                     <div class='card-body p-0 p-md-3'>
-                                            <center><iframe allowtransparency="true" id="frPreview2" onload="this.style.visibility=''" style="visibility:hidden; border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; width:100% !important;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe></center>
+                                            <center><iframe allowtransparency="true" id="frPreview2" onload="this.style.visibility=''" style="visibility:hidden; border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; width:100% !important;" class='w-100' data-src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe></center>
                                      </div>
                             </section><br>
                             
@@ -228,44 +229,55 @@ if (isset($_COOKIE['LinkCount'])) {
                                 <div class="form-group col-lg-8">
                             
                                     @php
+                                    $GLOBALS['__user_icon_links'][Auth::id()] = DB::table('links')
+                                        ->where('user_id', Auth::id())
+                                        ->where('button_id', 94)
+                                        ->get()
+                                        ->keyBy('title');
+
+                                    if (!function_exists('getUserIconRow')) {
+                                        function getUserIconRow($icon) {
+                                            $uid = Auth::id();
+                                            if (!isset($GLOBALS['__user_icon_links'][$uid])) {
+                                                $GLOBALS['__user_icon_links'][$uid] = DB::table('links')
+                                                    ->where('user_id', $uid)
+                                                    ->where('button_id', 94)
+                                                    ->get()
+                                                    ->keyBy('title');
+                                            }
+                                            return $GLOBALS['__user_icon_links'][$uid]->get($icon);
+                                        }
+                                    }
+
                                     if (!function_exists('iconLink')) {
                                         function iconLink($icon) {
-                                            $iconLink = DB::table('links')
-                                                ->where('user_id', Auth::id())
-                                                ->where('title', $icon)
-                                                ->where('button_id', 94)
-                                                ->value('link');
-                                            if (is_null($iconLink)){
+                                            $row = getUserIconRow($icon);
+                                            if (!$row || is_null($row->link)){
                                                 return false;
                                             } else {
-                                                return $iconLink;
+                                                return $row->link;
                                             }
                                         }
                                     }
                                     
                                     if (!function_exists('searchIcon')) {
                                         function searchIcon($icon) {
-                                            $iconId = DB::table('links')
-                                                ->where('user_id', Auth::id())
-                                                ->where('title', $icon)
-                                                ->where('button_id', 94)
-                                                ->value('id');
-                                            if (is_null($iconId)){
+                                            $row = getUserIconRow($icon);
+                                            if (!$row || is_null($row->id)){
                                                 return false;
                                             } else {
-                                                return $iconId;
+                                                return $row->id;
                                             }
                                         }
                                     }
                                     
                                     if (!function_exists('iconclicks')) {
                                         function iconclicks($icon) {
-                                            $iconClicks = searchIcon($icon);
-                                            $iconClicks = DB::table('links')->where('id', $iconClicks)->value('click_number');
-                                            if (is_null($iconClicks)){
+                                            $row = getUserIconRow($icon);
+                                            if (!$row || is_null($row->click_number)){
                                                 return 0;
                                             } else {
-                                                return $iconClicks;
+                                                return $row->click_number;
                                             }
                                         }
                                     }
@@ -344,7 +356,28 @@ if (isset($_COOKIE['LinkCount'])) {
       </div>
     </div>
 
-<script src="{{ asset('assets/external-dependencies/jquery-1.12.4.min.js') }}"></script>
-<script type="text/javascript">$("iframe").load(function() { $("iframe").contents().find("a").each(function(index) { $(this).on("click", function(event) { event.preventDefault(); event.stopPropagation(); }); }); });</script>
+@push('sidebar-scripts')
+<script type="text/javascript">
+$("iframe").on("load", function() {
+    $(this).contents().find("a").each(function() {
+        $(this).on("click", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
+    });
+});
+(function() {
+    function syncPreviewIframes() {
+        var targetId = window.innerWidth >= 1501 ? 'frPreview1' : 'frPreview2';
+        var iframe = document.getElementById(targetId);
+        if (iframe && !iframe.getAttribute('src') && iframe.dataset.src) {
+            iframe.setAttribute('src', iframe.dataset.src);
+        }
+    }
+    syncPreviewIframes();
+    window.addEventListener('resize', syncPreviewIframes);
+})();
+</script>
+@endpush
 
 @endsection

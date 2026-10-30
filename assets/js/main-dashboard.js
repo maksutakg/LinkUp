@@ -72,8 +72,8 @@
                     });
                     
                     setTimeout(function(){
-                        document.getElementById('frPreview1').src += '';
-                        document.getElementById('frPreview2').src += '';
+                        var f1 = document.getElementById('frPreview1'); if (f1 && f1.getAttribute('src')) f1.src += '';
+                        var f2 = document.getElementById('frPreview2'); if (f2 && f2.getAttribute('src')) f2.src += '';
                     }, 300);
                 }
             }

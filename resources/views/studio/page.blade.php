@@ -283,7 +283,7 @@
                 </form>
 
                 @if(env('ALLOW_USER_HTML') === true)
-                <script src="{{ asset('assets/external-dependencies/ckeditor.js') }}"></script>
+                @push('sidebar-scripts') <script src="{{ asset('assets/external-dependencies/ckeditor.js') }}"></script>
                 <script>
                   ClassicEditor
                       .create(document.querySelector('.ckeditor'), {
@@ -340,7 +340,7 @@
                       .catch(error => {
                           console.error(error);
                       });
-              </script>
+              </script> @endpush
                 
                 @endif
                 </div>
